@@ -30,7 +30,7 @@ const RegisterForTryouts = ({ open, handleClose, data, docId }) => {
       const CollectionRef = doc(db, "studentUsers", docId);
       await updateDoc(CollectionRef, dataForm);
       reset();
-      const collectionRef = collection(db, "games");
+      const collectionRef = collection(db, dataForm.gameName);
       await addDoc(collectionRef, { ...data, dataForm });
       toast.success("Registered Successfully");
       handleClose();
