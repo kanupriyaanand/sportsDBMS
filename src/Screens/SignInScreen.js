@@ -79,7 +79,7 @@ const SignInScreen = ({ setSignIn }) => {
           className="px-3 py-2 rounded-md"
           type="password"
           placeholder="Password"
-          {...register("password", { required: true })}
+          required
         />
         <input
           className="px-3 py-2 rounded-md"
