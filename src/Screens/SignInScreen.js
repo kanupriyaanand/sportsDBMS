@@ -79,8 +79,20 @@ const SignInScreen = ({ setSignIn }) => {
           className="px-3 py-2 rounded-md"
           type="password"
           placeholder="Password"
-          required
+          {...register("password", { required: true })}
         />
+        <select
+          className="px-3 py-2 rounded-md"
+          {...register("gender")}
+          required
+        >
+          <option value={null} defaultValue disabled>
+            Select Gender
+          </option>
+          <option value="M">M</option>
+          <option value="F">F</option>
+          <option value="others">Others</option>
+        </select>
         <input
           className="px-3 py-2 rounded-md"
           type="undefined"
