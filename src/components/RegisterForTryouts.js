@@ -78,7 +78,7 @@ const RegisterForTryouts = ({ open, handleClose, data, docId }) => {
               <input
                 className="px-3 py-2 rounded-md"
                 type="text"
-                placeholder={data?.Gender}
+                placeholder={data?.gender}
                 disabled
               />
 
