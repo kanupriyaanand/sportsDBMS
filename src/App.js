@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login, logout, selectUser } from "./features/userSlice";
 import HomeScreen from "./Screens/HomeScreen";
 import LoginScreen from "./Screens/LoginScreen";
+import DataTable from "./components/DataTable";
 
 function App() {
   const user = useSelector(selectUser);
@@ -40,6 +41,7 @@ function App() {
         <Router>
           <Routes>
             <Route path={"/"} exact element={<HomeScreen />} />
+            <Route path={"/viewTeam"} exact element={<DataTable />} />
           </Routes>
         </Router>
       )}
