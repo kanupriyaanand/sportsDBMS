@@ -6,6 +6,7 @@ import { login, logout, selectUser } from "./features/userSlice";
 import HomeScreen from "./Screens/HomeScreen";
 import LoginScreen from "./Screens/LoginScreen";
 import DataTable from "./components/DataTable";
+import UpcomingEvents from "./components/UpcomingEvents";
 
 function App() {
   const user = useSelector(selectUser);
@@ -41,7 +42,11 @@ function App() {
         <Router>
           <Routes>
             <Route path={"/"} exact element={<HomeScreen />} />
-            <Route path={"/viewTeam"} exact element={<DataTable />} />
+            <Route
+              path={"/upcomingEvents"}
+              exact
+              element={<UpcomingEvents />}
+            />
           </Routes>
         </Router>
       )}

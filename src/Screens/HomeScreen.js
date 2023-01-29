@@ -11,6 +11,7 @@ import ViewFinalTeam from "../components/ViewFinalTeam";
 import { useSelector } from "react-redux";
 import { selectUser } from "../features/userSlice";
 import { collection, getDocs, query, where } from "firebase/firestore";
+import { Link } from "react-router-dom";
 
 const HomeScreen = () => {
   const [data, setData] = useState(null);
@@ -72,7 +73,9 @@ const HomeScreen = () => {
           >
             RV College of Engineering
           </Typography>
-
+          <Link className="underline mr-8" to="/upcomingEvents">
+            Upcoming Events
+          </Link>
           <Button color="inherit" onClick={handleLogout}>
             Log Out
           </Button>
