@@ -33,7 +33,7 @@ const HomeScreen = () => {
   const user = useSelector(selectUser);
   const handleOpen1 = () => setOpen1(true);
   const handleClose1 = () => setOpen1(false);
-  
+
   const getUserData = async () => {
     const userData = collection(db, "studentUsers");
     const docSnap = await getDocs(
@@ -85,9 +85,10 @@ const HomeScreen = () => {
         >
           Register For Try-outs
         </button>
-        <button className="bg-white text-black w-full p-3 rounded-xl text-lg font-semibold hover:bg-gray-300"
-        onClick={handleOpen1}>
-        
+        <button
+          className="bg-white text-black w-full p-3 rounded-xl text-lg font-semibold hover:bg-gray-300"
+          onClick={handleOpen1}
+        >
           View Final Team
         </button>
       </div>

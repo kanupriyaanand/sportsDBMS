@@ -1,38 +1,15 @@
-import React from 'react'
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { useState} from 'react';
+import React, { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
 import db, { auth } from "../firebase";
-import { useSelector } from "react-redux";
-import { selectUser } from "../features/userSlice";
 
-
-
-const DataTable = () => {
-  const [data, setData] = useState(null);
-  const [open, setOpen] = useState(false);
-  const [open1, setOpen1] = useState(false);
-  const [docId, setDocId] = useState("");
-  const user = useSelector(selectUser);
-
-  const calling = (data, id) => {
-    setData(data);
-    setDocId(id);
+const DataTable = ({ value }) => {
+  const getUserData = async () => {
+    const querySnapshot = await getDocs(collection(db, "Branch"));
+    querySnapshot.forEach((doc) => console.log(doc.id, " => ", doc.data()));
   };
-   
 
- const getUserData = async () => {
-    const userData = collection(db, "Branch/USN/Dates");
-    const docSnap = await getDocs( 
-      query(userData, where("Sport", "==", user.Game))
-    );
+  getUserData();
+  return <div>aaya</div>;
+};
 
-    docSnap.forEach((doc) => calling(doc.data(), doc.id));
-  };
-  return (
-    <div>
-      
-    </div>
-  )
-}
-
-export default DataTable
+export default DataTable;

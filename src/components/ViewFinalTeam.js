@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { toast, Toaster } from "react-hot-toast";
-import db from "../firebase";
+import { Toaster } from "react-hot-toast";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import DataTable from "./DataTable";
-import { collection, getDoc, doc } from "firebase/firestore";
 
 const style = {
   position: "absolute",
@@ -56,15 +54,13 @@ const ViewFinalTeam = ({ open, handleClose }) => {
               <Tab label="Badminton" value={4} />
               <Tab label="Boys Cricket" value={5} />
               <Tab label="Boys Hockey" value={6} />
-              <Tab label="Item Seven" value={7} />
             </Tabs>
             {value === 1 && <DataTable value={"Basketball"} />}
-            {value === 2 && <DataTable value={"Gymnastics"}  />}
+            {value === 2 && <DataTable value={"Gymnastics"} />}
             {value === 3 && <DataTable value={"Football"} />}
-            {value === 4 && <DataTable value={"Badminton"}/>}
-            {value === 5 && <DataTable value={"Cricket"}/>}
-            {value === 6 && <DataTable value={"Hockey"}/>}
-            {value === 7 && <DataTable />}
+            {value === 4 && <DataTable value={"Badminton"} />}
+            {value === 5 && <DataTable value={"Cricket"} />}
+            {value === 6 && <DataTable value={"Hockey"} />}
           </div>
         </Box>
       </Modal>
