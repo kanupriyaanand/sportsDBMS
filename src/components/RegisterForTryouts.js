@@ -60,19 +60,20 @@ const RegisterForTryouts = ({ open, handleClose, data, docId }) => {
               <input
                 type="text"
                 className="px-3 py-2 rounded-md"
-                placeholder={data?.First_name}
+                placeholder={data?.First_name +" "+ data?.Last_name}
                 disabled
               />
-              <input
-                type="text"
-                className="px-3 py-2 rounded-md"
-                placeholder={data?.Last_name}
-                disabled
-              />
+              
               <input
                 type="text"
                 className="px-3 py-2 rounded-md"
                 placeholder={data?.Email}
+                disabled
+              />
+              <input
+                type="text"
+                className="px-3 py-2 rounded-md"
+                placeholder={data?.Mobile_number}
                 disabled
               />
               <input
@@ -95,18 +96,13 @@ const RegisterForTryouts = ({ open, handleClose, data, docId }) => {
                 placeholder={data?.department}
                 disabled
               />
-              <input
-                className="px-3 py-2 rounded-md"
-                type="text"
-                placeholder={data?.USN}
-                disabled
-              />
+              
               <select
                 className="px-3 py-2 rounded-md"
                 {...register("gameName")}
                 required
               >
-                <option value={null} defaultValue disabled>
+                <option value={null} selected disabled hidden>
                   Select Sport
                 </option>
                 <option value="football">Football</option>
@@ -118,7 +114,7 @@ const RegisterForTryouts = ({ open, handleClose, data, docId }) => {
                 {...register("ageGroup")}
                 required
               >
-                <option value={null} defaultValue disabled>
+                <option value={null} selected disabled hidden>
                   Select Age Group
                 </option>
                 <option value="u18">Under 18</option>

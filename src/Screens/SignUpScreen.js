@@ -16,7 +16,7 @@ function SignUpScreen({ setSignUp }) {
       passwordRef.current.value
     )
       .then((authUser) => {
-        toast.success("Signned In Successfully");
+        toast.success("Signed In Successfully");
         console.log(authUser);
       })
       .catch((error) => {

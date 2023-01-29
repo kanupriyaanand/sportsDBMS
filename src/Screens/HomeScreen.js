@@ -7,6 +7,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import RegisterForTryouts from "../components/RegisterForTryouts";
+import ViewFinalTeam from "../components/ViewFinalTeam";
 import { useSelector } from "react-redux";
 import { selectUser } from "../features/userSlice";
 import { collection, getDocs, query, where } from "firebase/firestore";
@@ -14,6 +15,7 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 const HomeScreen = () => {
   const [data, setData] = useState(null);
   const [open, setOpen] = useState(false);
+  const [open1, setOpen1] = useState(false);
   const [docId, setDocId] = useState("");
 
   const handleLogout = () => {
@@ -29,7 +31,9 @@ const HomeScreen = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const user = useSelector(selectUser);
-
+  const handleOpen1 = () => setOpen1(true);
+  const handleClose1 = () => setOpen1(false);
+  
   const getUserData = async () => {
     const userData = collection(db, "studentUsers");
     const docSnap = await getDocs(
@@ -81,7 +85,9 @@ const HomeScreen = () => {
         >
           Register For Try-outs
         </button>
-        <button className="bg-white text-black w-full p-3 rounded-xl text-lg font-semibold hover:bg-gray-300">
+        <button className="bg-white text-black w-full p-3 rounded-xl text-lg font-semibold hover:bg-gray-300"
+        onClick={handleOpen1}>
+        
           View Final Team
         </button>
       </div>
@@ -89,6 +95,12 @@ const HomeScreen = () => {
         data={data}
         open={open}
         handleClose={handleClose}
+        docId={docId}
+      />
+      <ViewFinalTeam
+        data={data}
+        open={open1}
+        handleClose={handleClose1}
         docId={docId}
       />
     </Box>
