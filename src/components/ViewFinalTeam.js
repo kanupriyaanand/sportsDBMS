@@ -50,21 +50,20 @@ const ViewFinalTeam = ({ open, handleClose }) => {
               scrollButtons="auto"
               aria-label="scrollable auto tabs example"
             >
-              <Tab label="Girls Basketball" value={1} />
-
-              <Tab label="Boys Basketball" value={2} />
-              <Tab label="Girls Football" value={3} />
-              <Tab label="Boys Football" value={4} />
+              <Tab label="Basketball" value={1} />
+              <Tab label="Gymnastics" value={2} />
+              <Tab label="Football" value={3} />
+              <Tab label="Badminton" value={4} />
               <Tab label="Boys Cricket" value={5} />
               <Tab label="Boys Hockey" value={6} />
               <Tab label="Item Seven" value={7} />
             </Tabs>
-            {value === 1 && <DataTable value={"basketball"} gender="F" />}
-            {value === 2 && <DataTable />}
-            {value === 3 && <DataTable />}
-            {value === 4 && <DataTable />}
-            {value === 5 && <DataTable />}
-            {value === 6 && <DataTable />}
+            {value === 1 && <DataTable value={"Basketball"} />}
+            {value === 2 && <DataTable value={"Gymnastics"}  />}
+            {value === 3 && <DataTable value={"Football"} />}
+            {value === 4 && <DataTable value={"Badminton"}/>}
+            {value === 5 && <DataTable value={"Cricket"}/>}
+            {value === 6 && <DataTable value={"Hockey"}/>}
             {value === 7 && <DataTable />}
           </div>
         </Box>
