@@ -7,6 +7,7 @@ import HomeScreen from "./Screens/HomeScreen";
 import LoginScreen from "./Screens/LoginScreen";
 import DataTable from "./components/DataTable";
 import UpcomingEvents from "./components/UpcomingEvents";
+import Achievements from "./components/Achievements";
 
 function App() {
   const user = useSelector(selectUser);
@@ -46,6 +47,11 @@ function App() {
               path={"/upcomingEvents"}
               exact
               element={<UpcomingEvents />}
+            />
+            <Route
+              path={"/Achievements"}
+              exact
+              element={<Achievements />}
             />
           </Routes>
         </Router>

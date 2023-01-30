@@ -38,7 +38,7 @@ const ViewFinalTeam = ({ open, handleClose }) => {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Final Teams
+            Applicants for try-outs
           </Typography>
           <div className="mt-2">
             <Tabs
@@ -48,19 +48,19 @@ const ViewFinalTeam = ({ open, handleClose }) => {
               scrollButtons="auto"
               aria-label="scrollable auto tabs example"
             >
-              {/* <Tab label="Basketball" value={1} />
-              <Tab label="Gymnastics" value={2} /> */}
+              {/* <Tab label="Basketball" value={1} />*/}
+              <Tab label="Gymnastics" value={2} /> 
               <Tab label="Football" value={1} />
-              {/* <Tab label="Badminton" value={4} />
-              <Tab label="Boys Cricket" value={5} />
-              <Tab label="Boys Hockey" value={6} /> */}
+              <Tab label="Badminton" value={4} />
+              {/*<Tab label="Boys Cricket" value={5} />*/}
+              <Tab label="Hockey" value={6} />
             </Tabs>
             {value === 1 && <DataTable value={"Football"} />}
             {/* {value === 2 && <DataTable value={"Gymnastics"} />}
-            {value === 3 && <DataTable value={"Football"} />}
+            {/*value === 3 && <DataTable value={"Football"} />}
             {value === 4 && <DataTable value={"Badminton"} />}
             {value === 5 && <DataTable value={"Cricket"} />}
-            {value === 6 && <DataTable value={"Hockey"} />} */}
+            {value === 6 && <DataTable value={"Hockey"} />}*/}
           </div>
         </Box>
       </Modal>

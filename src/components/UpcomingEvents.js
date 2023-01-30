@@ -78,7 +78,7 @@ const UpcomingEvents = () => {
             <td className="px-4 py-2 whitespace-nowrap">{item.Date}</td>
             <td className="px-4 py-2 whitespace-nowrap">{item.Name}</td>
             <td className="px-4 py-2 whitespace-nowrap">
-              {item.First_name} {item.Venue}
+             {item.Venue}
             </td>
           </tr>
         ))}

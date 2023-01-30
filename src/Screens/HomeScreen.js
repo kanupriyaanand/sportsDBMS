@@ -76,6 +76,9 @@ const HomeScreen = () => {
           <Link className="underline mr-8" to="/upcomingEvents">
             Upcoming Events
           </Link>
+          <Link className="underline mr-8" to="/Achievements">
+            Achievements
+          </Link>
           <Button color="inherit" onClick={handleLogout}>
             Log Out
           </Button>
@@ -92,7 +95,7 @@ const HomeScreen = () => {
           className="bg-white text-black w-full p-3 rounded-xl text-lg font-semibold hover:bg-gray-300"
           onClick={handleOpen1}
         >
-          View Final Team
+          View Applicants
         </button>
       </div>
       <RegisterForTryouts

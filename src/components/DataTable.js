@@ -23,7 +23,7 @@ const DataTable = () => {
       <table className="table-auto overflow-x-scroll w-full block">
         <thead>
           <tr className="">
-            <th className="px-4 py-2 whitespace-nowrap">Councellor Email</th>
+            
             <th className="px-4 py-2 whitespace-nowrap">Email</th>
             <th className="px-4 py-2 whitespace-nowrap">Name</th>
             <th className="px-4 py-2 whitespace-nowrap">Mobile Number</th>
@@ -36,9 +36,7 @@ const DataTable = () => {
 
         {data.map((item) => (
           <tr id={item.USN}>
-            <td className="px-4 py-2 whitespace-nowrap">
-              {item.Counselor_email}
-            </td>
+            
             <td className="px-4 py-2 whitespace-nowrap">{item.Email}</td>
             <td className="px-4 py-2 whitespace-nowrap">
               {item.First_name} {item.Last_name}
