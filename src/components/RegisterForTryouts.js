@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { useForm } from "react-hook-form";
 import { toast, Toaster } from "react-hot-toast";
-import { addDoc, collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import db from "../firebase";
 import { selectUser } from "../features/userSlice";
 import { useSelector } from "react-redux";
@@ -24,6 +32,7 @@ const style = {
 
 const RegisterForTryouts = ({ open, handleClose, data, docId }) => {
   console.log(data);
+  const [exists, notExists] = useState(true);
   const { register, handleSubmit, reset } = useForm();
   const user = useSelector(selectUser);
   const onSubmit = async (dataForm) => {
@@ -32,13 +41,21 @@ const RegisterForTryouts = ({ open, handleClose, data, docId }) => {
       const CollectionRef = doc(db, "studentUsers", docId);
       await updateDoc(CollectionRef, dataForm);
       reset();
-      
+
       const collectionRef = collection(db, dataForm.gameName);
-      const checkForDuplicate = async()=>{const docSnap =await getDoc(query(collectionRef, where("Email", "==", user.email)))}
-     
-      await addDoc(collectionRef, { ...data, dataForm });
-      
-      toast.success("Registered Successfully");
+
+      const checkForDuplicate = async () => {
+        const docSnap = await getDocs(
+          query(collectionRef, where("Email", "==", user.email))
+        );
+        if (docSnap.empty) {
+          await addDoc(collectionRef, { ...data, dataForm });
+          toast.success("Registered Successfully");
+        } else {
+          toast.error("User already registered");
+        }
+      };
+      checkForDuplicate();
       handleClose();
     } catch (e) {
       console.log(e);
@@ -66,10 +83,10 @@ const RegisterForTryouts = ({ open, handleClose, data, docId }) => {
               <input
                 type="text"
                 className="px-3 py-2 rounded-md"
-                placeholder={data?.First_name +" "+ data?.Last_name}
+                placeholder={data?.First_name + " " + data?.Last_name}
                 disabled
               />
-              
+
               <input
                 type="text"
                 className="px-3 py-2 rounded-md"
@@ -102,7 +119,7 @@ const RegisterForTryouts = ({ open, handleClose, data, docId }) => {
                 placeholder={data?.department}
                 disabled
               />
-              
+
               <select
                 className="px-3 py-2 rounded-md"
                 {...register("gameName")}
