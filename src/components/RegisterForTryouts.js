@@ -4,8 +4,10 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { useForm } from "react-hook-form";
 import { toast, Toaster } from "react-hot-toast";
-import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import db from "../firebase";
+import { selectUser } from "../features/userSlice";
+import { useSelector } from "react-redux";
 
 const style = {
   position: "absolute",
@@ -23,15 +25,19 @@ const style = {
 const RegisterForTryouts = ({ open, handleClose, data, docId }) => {
   console.log(data);
   const { register, handleSubmit, reset } = useForm();
-
+  const user = useSelector(selectUser);
   const onSubmit = async (dataForm) => {
     console.log(dataForm);
     try {
       const CollectionRef = doc(db, "studentUsers", docId);
       await updateDoc(CollectionRef, dataForm);
       reset();
+      
       const collectionRef = collection(db, dataForm.gameName);
+      const checkForDuplicate = async()=>{const docSnap =await getDoc(query(collectionRef, where("Email", "==", user.email)))}
+     
       await addDoc(collectionRef, { ...data, dataForm });
+      
       toast.success("Registered Successfully");
       handleClose();
     } catch (e) {
