@@ -11,12 +11,7 @@ import ViewFinalTeam from "../components/ViewFinalTeam";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../features/userSlice";
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { Link, Route, Router, Routes } from "react-router-dom";
-import AllEvents from "../components/AllEvents";
-import AllAchievements from "../components/AllAchievements";
-import UpcomingEvents from "../components/UpcomingEvents";
-import Achievements from "../components/Achievements";
-import NotFound from "../components/NotFound";
+import { Link } from "react-router-dom";
 
 const HomeScreen = () => {
   const [data, setData] = useState(null);
@@ -93,27 +88,6 @@ const HomeScreen = () => {
           >
             RV College of Engineering
           </Typography>
-          {isAdmin ? (
-            <Routes>
-              <Route path="/allEvents" exact element={<AllEvents />} />
-              <Route
-                path="/allAchievemnets"
-                exact
-                element={<AllAchievements />}
-              />
-              <Route element={<NotFound />} />
-            </Routes>
-          ) : (
-            <Routes>
-              <Route
-                path="/upcomingEvents"
-                exact
-                element={<UpcomingEvents />}
-              />
-              <Route path="/Achievements" exact element={<Achievements />} />
-              <Route element={<NotFound />} />
-            </Routes>
-          )}
 
           {isAdmin ? (
             <>
@@ -140,12 +114,14 @@ const HomeScreen = () => {
         </Toolbar>
       </AppBar>
       <div className="bg-black bg-opacity-60 text-white  mt-40 space-y-5 mx-auto w-fit p-5 rounded-md">
-       {isAdmin && <button
-          onClick={handleOpen}
-          className="bg-white text-black w-full p-3 rounded-xl text-lg font-semibold  hover:bg-gray-300"
-        >
-          Register For Try-outs
-        </button>}
+        {!isAdmin && (
+          <button
+            onClick={handleOpen}
+            className="bg-white text-black w-full p-3 rounded-xl text-lg font-semibold  hover:bg-gray-300"
+          >
+            Register For Try-outs
+          </button>
+        )}
         <button
           className="bg-white text-black w-full p-3 rounded-xl text-lg font-semibold hover:bg-gray-300"
           onClick={handleOpen1}

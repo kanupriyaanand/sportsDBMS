@@ -8,6 +8,8 @@ import LoginScreen from "./Screens/LoginScreen";
 import UpcomingEvents from "./components/UpcomingEvents";
 import Achievements from "./components/Achievements";
 import NotFound from "./components/NotFound";
+import AllAchievements from "./components/AllAchievements";
+import AllEvents from "./components/AllEvents";
 
 function App() {
   const user = useSelector(selectUser);
@@ -45,7 +47,15 @@ function App() {
         <Router>
           <Routes>
             <Route path={"/"} exact element={<HomeScreen />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="/allEvents" exact element={<AllEvents />} />
+            <Route
+              path="/allAchievements"
+              exact
+              element={<AllAchievements />}
+            />
+            <Route path="/upcomingEvents" exact element={<UpcomingEvents />} />
+            <Route path="/Achievements" exact element={<Achievements />} />
+            <Route element={<NotFound />} />
           </Routes>
         </Router>
       )}
