@@ -12,12 +12,10 @@ export const userSlice = createSlice({
     logout: (state) => {
       state.user = null;
     },
-    isAdmin: (state)=>{
-      state.user={
-        ...state.user,
-        isAdmin:true
-      }
-    }  },
+    isAdmin: (state, action) => {
+      state.user = action.payload;
+    },
+  },
 });
 
 export const { login, logout, isAdmin } = userSlice.actions;

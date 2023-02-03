@@ -11,16 +11,22 @@ import ViewFinalTeam from "../components/ViewFinalTeam";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../features/userSlice";
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { Link } from "react-router-dom";
+import { Link, Route, Router, Routes } from "react-router-dom";
 import { isAdmin } from "@firebase/util";
+import AllEvents from "../components/AllEvents";
+import AllAchievements from "../components/AllAchievements";
+import UpcomingEvents from "../components/UpcomingEvents";
+import Achievements from "../components/Achievements";
+import NotFound from "../components/NotFound";
 
 const HomeScreen = () => {
   const [data, setData] = useState(null);
   const [open, setOpen] = useState(false);
   const [open1, setOpen1] = useState(false);
   const [docId, setDocId] = useState("");
+  const [isAdmin, setAdmin] = useState(false);
 
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
@@ -42,8 +48,7 @@ const HomeScreen = () => {
     const docSnap = await getDocs(
       query(userData, where("Email", "==", user.email))
     );
-  
-    
+
     docSnap.forEach((doc) => calling(doc.data(), doc.id));
   };
 
@@ -54,10 +59,8 @@ const HomeScreen = () => {
   const calling = (data, id) => {
     setData(data);
     setDocId(id);
-    console.log(data.isAdmin)
-    data.isAdmin && dispatch(isAdmin())
-
-    console.log(data)
+    setAdmin(true);
+    console.log(data.isAdmin);
   };
 
   return (
@@ -72,7 +75,18 @@ const HomeScreen = () => {
             src="https://rvce.edu.in/sites/default/files/logo_0.png"
             alt=""
           />
- <svg className="-translate-y-6" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="white" d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8s8 3.59 8 8s-3.59 8-8 8m.25-6.73h-1.44v3.23H9V7.71h3.26c1.03 0 1.83.23 2.4.69c.56.47.84 1.1.84 1.96c0 .6-.13 1.1-.39 1.5c-.26.4-.65.72-1.18.95l1.9 3.59v.1h-1.94l-1.64-3.23m-1.44-1.46h1.46c.45 0 .8-.12 1.05-.35c.25-.23.37-.55.37-.96c0-.41-.11-.73-.35-.97c-.23-.24-.59-.35-1.08-.35h-1.45v2.63Z"/></svg>
+          <svg
+            className="-translate-y-6"
+            xmlns="http://www.w3.org/2000/svg"
+            width="1em"
+            height="1em"
+            viewBox="0 0 24 24"
+          >
+            <path
+              fill="white"
+              d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8s8 3.59 8 8s-3.59 8-8 8m.25-6.73h-1.44v3.23H9V7.71h3.26c1.03 0 1.83.23 2.4.69c.56.47.84 1.1.84 1.96c0 .6-.13 1.1-.39 1.5c-.26.4-.65.72-1.18.95l1.9 3.59v.1h-1.94l-1.64-3.23m-1.44-1.46h1.46c.45 0 .8-.12 1.05-.35c.25-.23.37-.55.37-.96c0-.41-.11-.73-.35-.97c-.23-.24-.59-.35-1.08-.35h-1.45v2.63Z"
+            />
+          </svg>
           <Typography
             variant="h6"
             component="div"
@@ -80,12 +94,47 @@ const HomeScreen = () => {
           >
             RV College of Engineering
           </Typography>
-          <Link className="underline mr-8" to="/upcomingEvents">
-            Upcoming Events
-          </Link>
-          <Link className="underline mr-8" to="/Achievements">
-            Achievements
-          </Link>
+          {isAdmin ? (
+            <Routes>
+              <Route path="/allEvents" exact element={<AllEvents />} />
+              <Route
+                path="/allAchievemnets"
+                exact
+                element={<AllAchievements />}
+              />
+              <Route element={<NotFound />} />
+            </Routes>
+          ) : (
+            <Routes>
+              <Route
+                path="/upcomingEvents"
+                exact
+                element={<UpcomingEvents />}
+              />
+              <Route path="/Achievements" exact element={<Achievements />} />
+              <Route element={<NotFound />} />
+            </Routes>
+          )}
+
+          {isAdmin ? (
+            <>
+              <Link className="underline mr-8" to="/allEvents">
+                All Events
+              </Link>
+              <Link className="underline mr-8" to="/allAchievements">
+                All Achievements
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link className="underline mr-8" to="/upcomingEvents">
+                Upcoming Events
+              </Link>
+              <Link className="underline mr-8" to="/Achievements">
+                Achievements
+              </Link>
+            </>
+          )}
           <Button color="inherit" onClick={handleLogout}>
             Log Out
           </Button>
@@ -110,12 +159,14 @@ const HomeScreen = () => {
         open={open}
         handleClose={handleClose}
         docId={docId}
+        admin={isAdmin}
       />
       <ViewFinalTeam
         data={data}
         open={open1}
         handleClose={handleClose1}
         docId={docId}
+        admin={isAdmin}
       />
     </Box>
   );

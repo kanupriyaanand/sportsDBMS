@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { login, logout, selectUser } from "./features/userSlice";
 import HomeScreen from "./Screens/HomeScreen";
 import LoginScreen from "./Screens/LoginScreen";
-import DataTable from "./components/DataTable";
 import UpcomingEvents from "./components/UpcomingEvents";
 import Achievements from "./components/Achievements";
+import NotFound from "./components/NotFound";
 
 function App() {
   const user = useSelector(selectUser);
@@ -20,7 +20,7 @@ function App() {
           login({
             uid: userAuth.uid,
             email: userAuth.email,
-            isAdmin: false
+            isAdmin: false,
           })
         );
         console.log(userAuth);
@@ -37,6 +37,7 @@ function App() {
       {!user ? (
         <Router>
           <Routes>
+            <Route path="*" element={<NotFound />} />
             <Route path="/" element={<LoginScreen />} />
           </Routes>
         </Router>
@@ -44,16 +45,7 @@ function App() {
         <Router>
           <Routes>
             <Route path={"/"} exact element={<HomeScreen />} />
-            <Route
-              path={"/upcomingEvents"}
-              exact
-              element={<UpcomingEvents />}
-            />
-            <Route
-              path={"/Achievements"}
-              exact
-              element={<Achievements />}
-            />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>
       )}
