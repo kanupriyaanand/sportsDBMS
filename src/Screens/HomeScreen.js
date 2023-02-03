@@ -12,7 +12,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../features/userSlice";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { Link, Route, Router, Routes } from "react-router-dom";
-import { isAdmin } from "@firebase/util";
 import AllEvents from "../components/AllEvents";
 import AllAchievements from "../components/AllAchievements";
 import UpcomingEvents from "../components/UpcomingEvents";
@@ -141,12 +140,12 @@ const HomeScreen = () => {
         </Toolbar>
       </AppBar>
       <div className="bg-black bg-opacity-60 text-white  mt-40 space-y-5 mx-auto w-fit p-5 rounded-md">
-        <button
+       {isAdmin && <button
           onClick={handleOpen}
           className="bg-white text-black w-full p-3 rounded-xl text-lg font-semibold  hover:bg-gray-300"
         >
           Register For Try-outs
-        </button>
+        </button>}
         <button
           className="bg-white text-black w-full p-3 rounded-xl text-lg font-semibold hover:bg-gray-300"
           onClick={handleOpen1}
