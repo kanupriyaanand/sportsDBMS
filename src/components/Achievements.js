@@ -39,7 +39,7 @@ const Achievements = () => {
   const doc = new jsPDF();
 
   const handlePrint = () => {
-    console.log('aaya')
+    console.log('this works')
 const   dataPlot = 
       data.map((item) => {
         return   [item.Name,

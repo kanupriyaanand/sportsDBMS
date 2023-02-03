@@ -35,6 +35,7 @@ const RegisterForTryouts = ({ open, handleClose, data, docId }) => {
   const [exists, notExists] = useState(true);
   const { register, handleSubmit, reset } = useForm();
   const user = useSelector(selectUser);
+  console.log(user.isAdmin);
   const onSubmit = async (dataForm) => {
     console.log(dataForm);
     try {

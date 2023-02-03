@@ -17,7 +17,7 @@ function SignUpScreen({ setSignUp }) {
     )
       .then((authUser) => {
         toast.success("Signed In Successfully");
-        console.log(authUser);
+        
       })
       .catch((error) => {
         toast.error("Cannot Sign You In");

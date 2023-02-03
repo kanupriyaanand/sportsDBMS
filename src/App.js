@@ -20,6 +20,7 @@ function App() {
           login({
             uid: userAuth.uid,
             email: userAuth.email,
+            isAdmin: false
           })
         );
         console.log(userAuth);

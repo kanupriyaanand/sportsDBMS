@@ -8,10 +8,11 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import RegisterForTryouts from "../components/RegisterForTryouts";
 import ViewFinalTeam from "../components/ViewFinalTeam";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../features/userSlice";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { Link } from "react-router-dom";
+import { isAdmin } from "@firebase/util";
 
 const HomeScreen = () => {
   const [data, setData] = useState(null);
@@ -19,6 +20,7 @@ const HomeScreen = () => {
   const [open1, setOpen1] = useState(false);
   const [docId, setDocId] = useState("");
 
+  const dispatch=useDispatch();
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
@@ -52,6 +54,10 @@ const HomeScreen = () => {
   const calling = (data, id) => {
     setData(data);
     setDocId(id);
+    console.log(data.isAdmin)
+    data.isAdmin && dispatch(isAdmin())
+
+    console.log(data)
   };
 
   return (
