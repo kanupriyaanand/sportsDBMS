@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
@@ -31,11 +31,9 @@ const style = {
 };
 
 const RegisterForTryouts = ({ open, handleClose, data, docId }) => {
-  console.log(data);
-  const [exists, notExists] = useState(true);
   const { register, handleSubmit, reset } = useForm();
   const user = useSelector(selectUser);
-  console.log(user.isAdmin);
+
   const onSubmit = async (dataForm) => {
     console.log(dataForm);
     try {

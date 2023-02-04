@@ -36,26 +36,27 @@ const UpcomingEvents = () => {
         console.log(error);
       });
   };
-  
+
   const doc = new jsPDF();
 
   const handlePrint = () => {
-    console.log('this works')
-const   dataPlot = 
-      data.map((item) => {
-        return   [item.Name,
+    console.log("this works");
+    const dataPlot = data.map((item) => {
+      return [
+        item.Name,
         item.Game,
         item.Department,
         item.Semester,
         item.Venue,
-        item.rank]
-      })
-   
-     autoTable(doc, {
-      head: [['Name', "Game", "Department", "Semester", "Venue", "Rank"]],
+        item.rank,
+      ];
+    });
+
+    autoTable(doc, {
+      head: [["Name", "Game", "Department", "Semester", "Venue", "Rank"]],
       body: dataPlot,
-    })
-    doc.save('table.pdf');
+    });
+    doc.save("table.pdf");
   };
   return (
     <Box
@@ -87,7 +88,7 @@ const   dataPlot =
       </AppBar>
 
       <table className="table-auto bg-black flex flex-col opacity-75 mt-52 px-16 mx-16 text-white">
-      <div className="flex w-[60vw] justify-between mt-3">
+        <div className="flex w-[60vw] justify-between mt-3">
           <span>Achievements 5th sem- 2022</span>
           <span
             onClick={handlePrint}
@@ -109,9 +110,7 @@ const   dataPlot =
           <tr id={item.Date} className="grid grid-cols-3 text-center">
             <td className="px-4 py-2 whitespace-nowrap">{item.Date}</td>
             <td className="px-4 py-2 whitespace-nowrap">{item.Name}</td>
-            <td className="px-4 py-2 whitespace-nowrap">
-             {item.Venue}
-            </td>
+            <td className="px-4 py-2 whitespace-nowrap">{item.Venue}</td>
           </tr>
         ))}
       </table>

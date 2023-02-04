@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import RegisterForTryouts from "../components/RegisterForTryouts";
 import ViewFinalTeam from "../components/ViewFinalTeam";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectUser } from "../features/userSlice";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { Link } from "react-router-dom";
@@ -20,7 +20,6 @@ const HomeScreen = () => {
   const [docId, setDocId] = useState("");
   const [isAdmin, setAdmin] = useState(false);
 
-  const dispatch = useDispatch();
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
@@ -48,6 +47,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     getUserData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const calling = (data, id) => {
@@ -89,25 +89,21 @@ const HomeScreen = () => {
             RV College of Engineering
           </Typography>
 
-          {isAdmin ? (
-            <>
-              <Link className="underline mr-8" to="/allEvents">
-                All Events
-              </Link>
-              <Link className="underline mr-8" to="/allAchievements">
-                All Achievements
-              </Link>
-            </>
-          ) : (
-            <>
-              <Link className="underline mr-8" to="/upcomingEvents">
-                Upcoming Events
-              </Link>
-              <Link className="underline mr-8" to="/Achievements">
-                Achievements
-              </Link>
-            </>
+          <Link className="underline mr-8" to="/upcomingEvents">
+            Upcoming Events
+          </Link>
+          <Link className="underline mr-8" to="/Achievements">
+            Achievements
+          </Link>
+          <Link className="underline mr-8" to={"/myProfile"}>
+            My Profile
+          </Link>
+          {isAdmin && (
+            <Link className="underline mr-8" to={"/viewParticipation"}>
+              Participation
+            </Link>
           )}
+
           <Button color="inherit" onClick={handleLogout}>
             Log Out
           </Button>

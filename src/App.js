@@ -8,8 +8,8 @@ import LoginScreen from "./Screens/LoginScreen";
 import UpcomingEvents from "./components/UpcomingEvents";
 import Achievements from "./components/Achievements";
 import NotFound from "./components/NotFound";
-import AllAchievements from "./components/AllAchievements";
-import AllEvents from "./components/AllEvents";
+import MyProfile from "./components/MyProfile";
+import ViewParticipation from "./components/ViewParticipation";
 
 function App() {
   const user = useSelector(selectUser);
@@ -47,14 +47,14 @@ function App() {
         <Router>
           <Routes>
             <Route path={"/"} exact element={<HomeScreen />} />
-            <Route path="/allEvents" exact element={<AllEvents />} />
-            <Route
-              path="/allAchievements"
-              exact
-              element={<AllAchievements />}
-            />
             <Route path="/upcomingEvents" exact element={<UpcomingEvents />} />
             <Route path="/Achievements" exact element={<Achievements />} />
+            <Route path="/myProfile" exact element={<MyProfile />} />
+            <Route
+              path="/viewParticipation"
+              exact
+              element={<ViewParticipation />}
+            />
             <Route element={<NotFound />} />
           </Routes>
         </Router>
