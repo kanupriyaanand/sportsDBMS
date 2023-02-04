@@ -130,6 +130,9 @@ const RegisterForTryouts = ({ open, handleClose, data, docId }) => {
                 <option value="football">Football</option>
                 <option value="cricket">Cricket</option>
                 <option value="basketball">BasketBall</option>
+                <option value="basketball">Badminton</option>
+                <option value="basketball">Gymnastics</option>
+                <option value="basketball">Yoga</option>
               </select>
               <select
                 className="px-3 py-2 rounded-md"

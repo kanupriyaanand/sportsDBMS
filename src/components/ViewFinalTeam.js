@@ -56,7 +56,7 @@ const ViewFinalTeam = ({ open, handleClose }) => {
               <Tab label="Hockey" value={6} />
             </Tabs>
             {value === 1 && <DataTable value={"Football"} />}
-            {/* {value === 2 && <DataTable value={"Gymnastics"} />}
+            {value === 2 && <DataTable value={"Gymnastics"} />}
             {/*value === 3 && <DataTable value={"Football"} />}
             {value === 4 && <DataTable value={"Badminton"} />}
             {value === 5 && <DataTable value={"Cricket"} />}
