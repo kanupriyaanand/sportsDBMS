@@ -53,7 +53,7 @@ const HomeScreen = () => {
   const calling = (data, id) => {
     setData(data);
     setDocId(id);
-    setAdmin(true);
+    data.isAdmin && setAdmin(true);
     console.log(data.isAdmin);
   };
 
