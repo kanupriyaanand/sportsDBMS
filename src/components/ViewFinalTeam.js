@@ -5,7 +5,7 @@ import Modal from "@mui/material/Modal";
 import { Toaster } from "react-hot-toast";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import DataTable from "./DataTable";
+import ApplicantsTable from "./ApplicantsTable";
 
 const style = {
   position: "absolute",
@@ -48,19 +48,19 @@ const ViewFinalTeam = ({ open, handleClose }) => {
               scrollButtons="auto"
               aria-label="scrollable auto tabs example"
             >
-              {/* <Tab label="Basketball" value={1} />*/}
+              <Tab label="Basketball" value={3} />
               <Tab label="Gymnastics" value={2} /> 
               <Tab label="Football" value={1} />
               <Tab label="Badminton" value={4} />
-              {/*<Tab label="Boys Cricket" value={5} />*/}
+              <Tab label="Cricket" value={5} />
               <Tab label="Hockey" value={6} />
             </Tabs>
-            {value === 1 && <DataTable value={"Football"} />}
-            {value === 2 && <DataTable value={"Gymnastics"} />}
-            {/*value === 3 && <DataTable value={"Football"} />}
-            {value === 4 && <DataTable value={"Badminton"} />}
-            {value === 5 && <DataTable value={"Cricket"} />}
-            {value === 6 && <DataTable value={"Hockey"} />}*/}
+            {value === 1 && <ApplicantsTable value={"football"} />}
+            {value === 2 && <ApplicantsTable value={"gymnastics"} />}
+            {value === 4 && <ApplicantsTable value={"badminton"} />}
+            {value === 3 && <ApplicantsTable value={"basketball"} />}
+            {value === 6 && <ApplicantsTable value={"hockey"} />}
+            {value === 5 && <ApplicantsTable value={"cricket"} />}
           </div>
         </Box>
       </Modal>
