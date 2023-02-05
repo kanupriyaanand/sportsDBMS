@@ -12,9 +12,11 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../features/userSlice";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { Link } from "react-router-dom";
+import Graph from "../components/Graph";
 
 const HomeScreen = () => {
   const [data, setData] = useState(null);
+  const [alldata, setAllData] = useState(null);
   const [open, setOpen] = useState(false);
   const [open1, setOpen1] = useState(false);
   const [docId, setDocId] = useState("");
@@ -47,6 +49,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     getUserData();
+    getUsersData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -55,6 +58,26 @@ const HomeScreen = () => {
     setDocId(id);
     data.isAdmin && setAdmin(true);
     console.log(data.isAdmin);
+  };
+
+  let series = [];
+
+  const getUsersData = async () => {
+    const game = [
+      "football",
+      "cricket",
+      "yoga",
+      "hockey",
+      "basketball",
+      "gymnastics",
+      "badminton",
+    ];
+    game.forEach(async (i) => {
+      const querySnapshot = await getDocs(collection(db, i));
+      series.push(querySnapshot.size);
+    });
+    setAllData(series);
+    console.log("running");
   };
 
   return (
@@ -139,6 +162,7 @@ const HomeScreen = () => {
         docId={docId}
         admin={isAdmin}
       />
+      {data && <Graph data={alldata} />}
     </Box>
   );
 };
