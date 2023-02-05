@@ -10,7 +10,6 @@ import Achievements from "./components/Achievements";
 import NotFound from "./components/NotFound";
 import MyProfile from "./components/MyProfile";
 import ViewParticipation from "./components/ViewParticipation";
-import emailjs from '@emailjs/browser';
 
 function App() {
   const user = useSelector(selectUser);

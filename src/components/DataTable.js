@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import db from "../firebase";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 const DataTable = ({ value }) => {
   let users = [];
@@ -18,8 +20,43 @@ const DataTable = ({ value }) => {
     getUserData();
   }, []);
 
-  return (
-    <div className="mb-32 bg-white">
+  const doc = new jsPDF();
+
+  const handlePrint = () => {
+    console.log("this works");
+    const dataPlot = data.map((item) => {
+      return [
+        item.Name,
+        item.Tournament,
+        item.USN,
+        item.Dates,
+        item.Branch,
+        item.Game,
+        item.place,
+        item.Result,
+      ];
+    });
+
+    autoTable(doc, {
+      head: [
+        [
+          "Name",
+          "Tournament",
+          "USN",
+          "Dates",
+          "Department",
+          "Game",
+          "Place",
+          "Result",
+        ],
+      ],
+      body: dataPlot,
+    });
+    doc.save("table.pdf");
+  };
+
+  const getTable = () => {
+    return (
       <table className="table-auto overflow-x-scroll w-full block ">
         <thead>
           <tr className="">
@@ -46,9 +83,25 @@ const DataTable = ({ value }) => {
             <td className="px-4 py-2 whitespace-nowrap">{item.Result}</td>
           </tr>
         ))}
-        <button>mail to HoD</button>
       </table>
-    </div>
+    );
+  };
+  return (
+    <>
+      <div className="flex space-x-2">
+        <button
+          onClick={handlePrint}
+          className="float-right mr-10 my-1 bg-blue-600 text-white px-3 py-4 rounded-md"
+        >
+          Download PDF
+        </button>
+        <button className="float-right my-1 bg-blue-600 text-white px-3 py-4 rounded-md">
+          <a href="mailto:kanupriya.a01@gmail.com">Send email</a>
+        </button>
+      </div>
+
+      <div className="mb-32 bg-white">{getTable()}</div>
+    </>
   );
 };
 
