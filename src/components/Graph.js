@@ -14,9 +14,7 @@ const Graph = ({ data }) => {
   ];
 
   const options = {
-    xaxis: {
-      categories: game, //will be displayed on the x-asis
-    },
+    labels: game
   };
 
   return (
