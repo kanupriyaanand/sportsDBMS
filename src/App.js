@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { auth } from "./firebase";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +10,7 @@ import Achievements from "./components/Achievements";
 import NotFound from "./components/NotFound";
 import MyProfile from "./components/MyProfile";
 import ViewParticipation from "./components/ViewParticipation";
+import emailjs from '@emailjs/browser';
 
 function App() {
   const user = useSelector(selectUser);

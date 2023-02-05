@@ -46,6 +46,7 @@ const DataTable = ({ value }) => {
             <td className="px-4 py-2 whitespace-nowrap">{item.Result}</td>
           </tr>
         ))}
+        <button>mail to HoD</button>
       </table>
     </div>
   );
