@@ -1,8 +1,7 @@
-import React from "react";
+import React,{useEffect} from "react";
 import Chart from "react-apexcharts";
 
 const Graph = ({ data }) => {
-  console.log(data);
   const game = [
     "football",
     "cricket",
@@ -19,6 +18,7 @@ const Graph = ({ data }) => {
 
   return (
     <div className="bg-white w-fit mt-5 mx-auto rounded-2xl p-5">
+      <span>Statistics of applicants for try-outs</span>
       <Chart options={options} type="pie" series={data} width="380" />
     </div>
   );

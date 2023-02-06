@@ -16,7 +16,7 @@ import Graph from "../components/Graph";
 
 const HomeScreen = () => {
   const [data, setData] = useState(null);
-  const [alldata, setAllData] = useState(null);
+  const [alldata, setAllData] = useState([]);
   const [open, setOpen] = useState(false);
   const [open1, setOpen1] = useState(false);
   const [docId, setDocId] = useState("");
@@ -162,7 +162,7 @@ const HomeScreen = () => {
         docId={docId}
         admin={isAdmin}
       />
-      {data && <Graph data={alldata} />}
+      {(alldata.length===0)?<></>:<Graph data={alldata} />}
     </Box>
   );
 };

@@ -68,8 +68,8 @@ const SignInScreen = ({ setSignIn }) => {
           placeholder="Mobile number"
           {...register("Mobile_number", {
             required: true,
-            minLength: 10,
-            maxLength: {
+            
+            minLength: {
               value: 10,
             message: "enter a valid phone number"
           }})}
