@@ -178,7 +178,7 @@ const SignInScreen = ({ setSignIn }) => {
             required: true,
             pattern: {
               value: /(?:1RV)(?:\d)(?:\d)(?:[A-Z])(?:[A-Z])(?:\d)(?:\d)(?:\d)$/,
-              message: "Please check your USN",
+              message: "Please enter a valid USN",
             },
             maxLength: { value: 10, message: "enter valid USN" },
           })}

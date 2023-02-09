@@ -10,6 +10,7 @@ import Achievements from "./components/Achievements";
 import NotFound from "./components/NotFound";
 import MyProfile from "./components/MyProfile";
 import ViewParticipation from "./components/ViewParticipation";
+import Chatbot from "./components/Chatbot";
 
 function App() {
   const user = useSelector(selectUser);
@@ -59,7 +60,9 @@ function App() {
           </Routes>
         </Router>
       )}
+      <Chatbot/>
     </div>
+    
   );
 }
 
