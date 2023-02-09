@@ -19,7 +19,7 @@ componentDidMount(){
 render(){
   return (
     <div>
-      <h1>RV Sports Bot</h1>
+      
     </div>
   )
 }
