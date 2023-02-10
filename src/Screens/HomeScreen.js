@@ -141,12 +141,13 @@ const HomeScreen = () => {
             Register For Try-outs
           </button>
         )}
+        {isAdmin && (
         <button
           className="bg-white text-black w-full p-3 rounded-xl text-lg font-semibold hover:bg-gray-300"
           onClick={handleOpen1}
         >
           View Applicants
-        </button>
+        </button>)}
       </div>
       <RegisterForTryouts
         data={data}
