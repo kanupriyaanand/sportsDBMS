@@ -102,7 +102,7 @@ const SignInScreen = ({ setSignIn }) => {
               message: "enter a 10 digit phone number",
             },
             pattern: {
-              value: /^\S[0-9]*$/i,
+              value: /(?:\d)(?:\d)(?:\d)(?:\d)(?:\d)(?:\d)(?:\d)(?:\d)(?:\d)(?:\d)$/,
               message: "only numbers to be entered",
             },
           })}
@@ -164,12 +164,30 @@ const SignInScreen = ({ setSignIn }) => {
             required: true,
           })}
         />
-        <input
+        <select
           className="px-3 py-2 rounded-md"
-          type="text"
-          placeholder="Department"
-          {...register("department", { required: true })}
-        />
+          {...register("gender")}
+          required
+        >
+          <option value={null} selected disabled hidden>
+            Select Department
+          </option>
+          <option value="AS">AS</option>
+          <option value="AIML">CS</option>
+          <option value="CH">CH</option>
+          <option value="CS">CS</option>
+          <option value="CV">CV</option>
+          <option value="EC">EC</option>
+          <option value="EE">EE</option>
+          <option value="EI">EI</option>
+          <option value="ET">ET</option>
+          <option value="IS">IS</option>
+          <option value="IM">IM</option>
+          <option value="ME">ME</option>
+          <option value="MCA">MCA</option>
+          <option value="M.Tech">M.Tech</option>
+
+        </select>
         <input
           className="px-3 py-2 rounded-md"
           type="text"
@@ -190,10 +208,12 @@ const SignInScreen = ({ setSignIn }) => {
           placeholder="Counselor email"
           {...register("Counselor_email", {
             required: true,
-            pattern: /^\S+@rvce.edu.in+$/i,
+            pattern:{value:/^\S+@rvce.edu.in+$/i,
+            message: "Please enter RVCE email"}
           })}
+          
         />
-
+        <div className="text-red-700">{errors.Counselor_email?.message}</div>
         <button
           className="px-3 py-2 rounded-md bg-blue-900 text-white"
           type="submit"
