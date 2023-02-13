@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import db, { auth } from "../firebase";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -19,6 +19,7 @@ const UpcomingEvents = () => {
   const [open2, setOpen] = useState(false);
   const [docId, setDocId] = useState("");
   const [data, setData] = useState([]);
+  const [data1, setData1] = useState([]);
   const [isAdmin, setAdmin] = useState(false);
 
   const handleOpen2 = () => setOpen(true);
@@ -34,15 +35,26 @@ const UpcomingEvents = () => {
     setData(users);
   };
 
+  const getUserDataagain = async () => {
+    const userData = collection(db, "studentUsers");
+    const docSnap = await getDocs(
+      query(userData, where("Email", "==", user.email))
+    );
+
+    docSnap.forEach((doc) => calling(doc.data(), doc.id));
+  };
+
+
   useEffect(() => {
     getUserData();
+    getUserDataagain();
   }, []);
 
-  const calling = (data, id) => {
-    setData(data);
+  const calling = (d, id) => {
+    setData1(d);
     setDocId(id);
-    data.isAdmin && setAdmin(true);
-    console.log(data.isAdmin);
+    d.isAdmin && setAdmin(true);
+    console.log(d.isAdmin);
   };
 
   const handleLogout = () => {
@@ -105,12 +117,12 @@ const UpcomingEvents = () => {
       <table className="table-auto bg-black flex flex-col opacity-75 mt-52 px-16 mx-16 text-white">
         <div className="flex w-[60vw] justify-between mt-3">
           <span>Achievements 5th sem- 2022</span>
-          <span
+          {isAdmin &&<span
             onClick={handleOpen2}
             className="ml-10 cursor-pointer bg-blue-700 text-white px-3 py-2 rounded-lg"
           >
             Add event
-          </span>
+          </span>}
           <span
             onClick={handlePrint}
             className="ml-10 cursor-pointer bg-blue-700 text-white px-3 py-2 rounded-lg"
