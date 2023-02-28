@@ -13,6 +13,11 @@ import { selectUser } from "../features/userSlice";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import Graph from "../components/Graph";
+//import firebase from "firebase/app";
+import firebase from 'firebase/compat/app';
+import "firebase/auth";
+import "firebase/firestore";
+
 
 const HomeScreen = () => {
   const [data, setData] = useState(null);
@@ -21,6 +26,7 @@ const HomeScreen = () => {
   const [open1, setOpen1] = useState(false);
   const [docId, setDocId] = useState("");
   const [isAdmin, setAdmin] = useState(false);
+  const [userVal, setUser] = useState(null);
 
   const handleLogout = () => {
     signOut(auth)
@@ -51,11 +57,20 @@ const HomeScreen = () => {
     getUserData();
     getUsersData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    //firebase.auth().onAuthStateChanged((currentUser) => {
+    {/*db.onAuthStateChanged((currentUser) => {
+      if (currentUser) {
+        setUser(currentUser);
+      } else {
+        setUser(null);
+      }
+    });*/}
   }, []);
 
   const calling = (data, id) => {
     setData(data);
     setDocId(id);
+    setUser(data);
     data.isAdmin && setAdmin(true);
     console.log(data.isAdmin);
   };
@@ -111,6 +126,20 @@ const HomeScreen = () => {
           >
             RV College of Engineering
           </Typography>
+
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1, marginLeft: "45px" }}
+          >
+          {userVal && (
+          <p>
+          Welcome, {userVal?.First_name}! 
+          </p>
+          )}
+          </Typography>
+
+          
 
           <Link className="underline mr-8" to="/upcomingEvents">
             Upcoming Events
