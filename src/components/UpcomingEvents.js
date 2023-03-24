@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, deleteDoc, getDocs, query, where, doc } from "firebase/firestore";
 import db, { auth } from "../firebase";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -13,6 +13,7 @@ import autoTable from "jspdf-autotable";
 import { useSelector } from "react-redux";
 import { selectUser } from "../features/userSlice";
 import AddEvent from "./AddEvent";
+import toast, { Toaster } from "react-hot-toast";
 
 const UpcomingEvents = () => {
   let users = [];
@@ -28,8 +29,8 @@ const UpcomingEvents = () => {
 
   const getUserData = async () => {
     const querySnapshot = await getDocs(collection(db, "Upcoming_Tournaments"));
-    querySnapshot.forEach((doc) => {
-      users.push(doc.data());
+    querySnapshot.forEach((doc1) => {
+      users.push(doc1.data());
     });
     console.log(users);
     setData(users);
@@ -41,7 +42,7 @@ const UpcomingEvents = () => {
       query(userData, where("Email", "==", user.email))
     );
 
-    docSnap.forEach((doc) => calling(doc.data(), doc.id));
+    docSnap.forEach((doc1) => calling(doc1.data(), doc1.id));
   };
 
 
@@ -67,7 +68,7 @@ const UpcomingEvents = () => {
       });
   };
 
-  const doc = new jsPDF();
+  const doc2 = new jsPDF();
 
   const handlePrint = () => {
     console.log("this works");
@@ -79,17 +80,19 @@ const UpcomingEvents = () => {
       ];
     });
 
-    autoTable(doc, {
+    autoTable(doc2, {
       head: [["Competition Name", "Venue", "Date"]],
       body: dataPlot,
     });
-    doc.save("table.pdf");
+    doc2.save("events.pdf");
   };
   return (
+    
     <Box
       sx={{ flexGrow: 1 }}
       className="bg-logged-in bg-right min-h-[100vh] bg-cover"
     >
+      <Toaster />
       <AppBar position="static">
         <Toolbar sx={{ paddingY: "10px" }}>
           <img
@@ -132,18 +135,21 @@ const UpcomingEvents = () => {
         </div>
 
         <thead>
-          <tr className="grid grid-cols-3">
+          <tr className="grid grid-cols-4">
             <th className="px-4 py-2 whitespace-nowrap">Date</th>
             <th className="px-4 py-2 whitespace-nowrap">Event Name</th>
             <th className="px-4 py-2 whitespace-nowrap">Venue</th>
+            <th  >action</th>
           </tr>
         </thead>
 
         {data.map((item) => (
-          <tr id={item.Date} className="grid grid-cols-3 text-center">
+          <tr id={item.Date} className="grid grid-cols-4 text-center">
             <td className="px-4 py-2 whitespace-nowrap">{item.Date}</td>
             <td className="px-4 py-2 whitespace-nowrap">{item.Name}</td>
             <td className="px-4 py-2 whitespace-nowrap">{item.Venue}</td>
+            <td><button onClick={async ()=>{await deleteDoc(doc(db, "Upcoming_Tournaments", item.Date))
+          toast.success("Deleted successfully, refresh page")}}>delete</button></td>
           </tr>
         ))}
       </table>
