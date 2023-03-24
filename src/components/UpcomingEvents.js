@@ -106,7 +106,7 @@ const UpcomingEvents = () => {
             RV College of Engineering
           </Typography>
           <Link className="underline mr-8" to="/upcomingEvents">
-            Upcoming Events
+            Events
           </Link>
           <Button color="inherit" onClick={handleLogout}>
             Log Out

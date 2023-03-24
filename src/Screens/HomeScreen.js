@@ -142,7 +142,7 @@ const HomeScreen = () => {
           
 
           <Link className="underline mr-8" to="/upcomingEvents">
-            Upcoming Events
+            Events
           </Link>
           <Link className="underline mr-8" to="/Achievements">
             Achievements

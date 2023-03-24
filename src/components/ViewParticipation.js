@@ -47,7 +47,7 @@ const ViewParticipation = () => {
             RV College of Engineering
           </Typography>
           <Link className="underline mr-8" to="/upcomingEvents">
-            Upcoming Events
+            Participants
           </Link>
           <Button color="inherit" onClick={handleLogout}>
             Log Out

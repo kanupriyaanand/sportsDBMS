@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
@@ -6,6 +6,12 @@ import { Toaster } from "react-hot-toast";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import ApplicantsTable from "./ApplicantsTable";
+import { useSelector } from "react-redux";
+import { selectUser } from "../features/userSlice";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import db from "../firebase";
+import AddEvent from "./AddEvent";
+import AddSport from "./AddSport";
 
 const style = {
   position: "absolute",
@@ -22,9 +28,36 @@ const style = {
 
 const ViewFinalTeam = ({ open, handleClose }) => {
   const [value, setValue] = useState(1);
+  const [isAdmin, setAdmin] = useState(false);
+  const [open2, setOpen] = useState(false);
+  const [docId, setDocId] = useState("");
+  const [data1, setData1] = useState([]);
 
+  const handleOpen2 = () => setOpen(true);
+  const handleClose2 = () => setOpen(false);
+  const user = useSelector(selectUser);
   const handleChange = (event, newValue) => {
     setValue(newValue);
+  };
+
+  const getUserDataagain = async () => {
+    const userData = collection(db, "studentUsers");
+    const docSnap = await getDocs(
+      query(userData, where("Email", "==", user.email))
+    );
+    docSnap.forEach((doc) => calling(doc.data(), doc.id));
+  };
+
+  useEffect(() => {
+    
+    getUserDataagain();
+  }, []);
+
+  const calling = (d, id) => {
+    setData1(d);
+    setDocId(id);
+    d.isAdmin && setAdmin(true);
+    console.log(d.isAdmin);
   };
 
   return (
@@ -40,6 +73,14 @@ const ViewFinalTeam = ({ open, handleClose }) => {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Applicants for try-outs
           </Typography>
+          
+          {isAdmin &&<span
+            onClick={handleOpen2}
+            sx={{ flexGrow: 1, marginLeft: "15px" }}
+            className="ml-10 cursor-pointer bg-blue-700 text-white px-3 py-2 rounded-lg"
+          >
+            Add new sport
+          </span>}
           <div className="mt-2">
             <Tabs
               value={value}
@@ -62,6 +103,12 @@ const ViewFinalTeam = ({ open, handleClose }) => {
             {value === 6 && <ApplicantsTable value={"hockey"} />}
             {value === 5 && <ApplicantsTable value={"cricket"} />}
           </div>
+          <AddSport
+        open={open2}
+        handleClose={handleClose2}
+        docId={docId}
+        admin={isAdmin}
+      />
         </Box>
       </Modal>
     </>

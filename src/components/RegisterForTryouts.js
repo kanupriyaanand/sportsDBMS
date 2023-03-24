@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
@@ -16,6 +16,7 @@ import {
 import db from "../firebase";
 import { selectUser } from "../features/userSlice";
 import { useSelector } from "react-redux";
+import { async } from "@firebase/util";
 
 const style = {
   position: "absolute",
@@ -33,7 +34,16 @@ const style = {
 const RegisterForTryouts = ({ open, handleClose, data, docId }) => {
   const { register, handleSubmit, reset } = useForm();
   const user = useSelector(selectUser);
-
+  const [sportNames, setSportNames]= useState([]);
+  
+  useEffect(async() => {
+    const CollectionR = collection(db, `sports`);
+    const col = await getDocs(CollectionR);
+    col.forEach((col) => {
+     setSportNames(col.data().Game)
+    })
+  }, [])
+  
   const onSubmit = async (dataForm) => {
     console.log(dataForm);
     try {
@@ -54,6 +64,9 @@ const RegisterForTryouts = ({ open, handleClose, data, docId }) => {
           toast.error("User already registered");
         }
       };
+      
+
+      
       checkForDuplicate();
       handleClose();
     } catch (e) {
@@ -127,12 +140,10 @@ const RegisterForTryouts = ({ open, handleClose, data, docId }) => {
                 <option value={null} selected disabled hidden>
                   Select Sport
                 </option>
-                <option value="football">Football</option>
-                <option value="cricket">Cricket</option>
-                <option value="basketball">BasketBall</option>
-                <option value="badminton">Badminton</option>
-                <option value="gymnastics">Gymnastics</option>
-                <option value="yoga">Yoga</option>
+
+              {
+                sportNames?.map((e)=><option value={e.toLowerCase()||""}>{e}</option>)
+              }
               </select>
               <select
                 className="px-3 py-2 rounded-md"
