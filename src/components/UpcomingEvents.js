@@ -111,6 +111,17 @@ const UpcomingEvents = () => {
           <Link className="underline mr-8" to="/upcomingEvents">
             Events
           </Link>
+          <Link className="underline mr-8" to="/Achievements">
+            Achievements
+          </Link>
+          <Link className="underline mr-8" to={"/myProfile"}>
+            My Profile
+          </Link>
+          {isAdmin && (
+            <Link className="underline mr-8" to={"/viewParticipation"}>
+              Participation
+            </Link>
+          )}
           <Button color="inherit" onClick={handleLogout}>
             Log Out
           </Button>
@@ -119,7 +130,7 @@ const UpcomingEvents = () => {
 
       <table className="table-auto bg-black flex flex-col opacity-75 mt-52 px-16 mx-16 text-white">
         <div className="flex w-[60vw] justify-between mt-3">
-          <span>Achievements 5th sem- 2022</span>
+          <span style={StyleSheet.bold} >Sports Events 2023</span>
           {isAdmin &&<span
             onClick={handleOpen2}
             className="ml-10 cursor-pointer bg-blue-700 text-white px-3 py-2 rounded-lg"

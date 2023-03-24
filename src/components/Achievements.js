@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import db, { auth } from "../firebase";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -10,8 +10,28 @@ import { Link } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import { useSelector } from "react-redux";
+import { selectUser } from "../features/userSlice";
 
 const Achievements = () => {
+
+  const [isAdmin, setAdmin] = useState(false);
+  const userVal = useSelector(selectUser);
+
+  const getUserData1 = async () => {
+    const userData = collection(db, "studentUsers");
+    const docSnap = await getDocs(
+      query(userData, where("Email", "==", userVal.email))
+    );
+
+    docSnap.forEach((doc) => calling(doc.data()));
+  };
+
+  const calling = (data) => {
+    selectUser(data);
+    data.isAdmin && setAdmin(true);
+  };
+
   let users = [];
   const [data, setData] = useState([]);
   const getUserData = async () => {
@@ -24,6 +44,7 @@ const Achievements = () => {
   };
 
   useEffect(() => {
+    getUserData1();
     getUserData();
   }, []);
   const handleLogout = () => {
@@ -77,10 +98,20 @@ const   dataPlot =
           >
             RV College of Engineering
           </Typography>
-
+          
+          <Link className="underline mr-8" to="/upcomingEvents">
+            Events
+          </Link>
           <Link className="underline mr-8" to="/Achievements">
             Achievements
           </Link>
+          <Link className="underline mr-8" to={"/myProfile"}>
+            My Profile
+          </Link>
+          {isAdmin && (
+            <Link className="underline mr-8" to={"/viewParticipation"}>
+              Participation
+            </Link>)}
           <Button color="inherit" onClick={handleLogout}>
             Log Out
           </Button>
