@@ -17,6 +17,9 @@ import Graph from "../components/Graph";
 import firebase from 'firebase/compat/app';
 import "firebase/auth";
 import "firebase/firestore";
+import AddDates from "../components/AddDates";
+import TryoutDates from "../components/TryoutDates";
+import MyTryoutDates from "../components/MyTryoutDates";
 
 
 const HomeScreen = () => {
@@ -24,6 +27,8 @@ const HomeScreen = () => {
   const [alldata, setAllData] = useState([]);
   const [open, setOpen] = useState(false);
   const [open1, setOpen1] = useState(false);
+  const [open2, setOpen2] = useState(false);
+  const [open3, setOpen3] = useState(false);
   const [docId, setDocId] = useState("");
   const [isAdmin, setAdmin] = useState(false);
   const [userVal, setUser] = useState(null);
@@ -43,7 +48,10 @@ const HomeScreen = () => {
   const user = useSelector(selectUser);
   const handleOpen1 = () => setOpen1(true);
   const handleClose1 = () => setOpen1(false);
-
+  const handleOpen2 = () => setOpen2(true);
+  const handleClose2 = () => setOpen2(false);
+  const handleOpen3 = () => setOpen3(true);
+  const handleClose3 = () => setOpen3(false);
   const getUserData = async () => {
     const userData = collection(db, "studentUsers");
     const docSnap = await getDocs(
@@ -177,6 +185,20 @@ const HomeScreen = () => {
         >
           View Applicants
         </button>)}
+        {isAdmin && (
+        <button
+          className="bg-white text-black w-full p-3 rounded-xl text-lg font-semibold hover:bg-gray-300"
+          onClick={handleOpen2}
+        >
+          Dates for Try-outs
+        </button>)}
+        {!isAdmin && (
+        <button
+          className="bg-white text-black w-full p-3 rounded-xl text-lg font-semibold hover:bg-gray-300"
+          onClick={handleOpen3}
+        >
+          My Try-outs Dates
+        </button>)}
       </div>
       <RegisterForTryouts
         data={data}
@@ -189,6 +211,20 @@ const HomeScreen = () => {
         data={data}
         open={open1}
         handleClose={handleClose1}
+        docId={docId}
+        admin={isAdmin}
+      />
+      <TryoutDates
+        data={data}
+        open={open2}
+        handleClose={handleClose2}
+        docId={docId}
+        admin={isAdmin}
+      />
+      <MyTryoutDates
+        data={data}
+        open={open3}
+        handleClose={handleClose3}
         docId={docId}
         admin={isAdmin}
       />

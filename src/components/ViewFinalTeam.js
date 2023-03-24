@@ -69,7 +69,7 @@ const ViewFinalTeam = ({ open, handleClose }) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={style} >
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Applicants for try-outs
           </Typography>
@@ -77,10 +77,11 @@ const ViewFinalTeam = ({ open, handleClose }) => {
           {isAdmin &&<span
             onClick={handleOpen2}
             sx={{ flexGrow: 1, marginLeft: "15px" }}
-            className="ml-10 cursor-pointer bg-blue-700 text-white px-3 py-2 rounded-lg"
+            style={{ float: 'right' }}
+            className="ml-10  cursor-pointer bg-blue-700 text-white px-3 py-2 rounded-lg"
           >
             Add new sport
-          </span>}
+          </span>} 
           <div className="mt-2">
             <Tabs
               value={value}

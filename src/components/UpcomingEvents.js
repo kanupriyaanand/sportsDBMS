@@ -139,7 +139,13 @@ const UpcomingEvents = () => {
             <th className="px-4 py-2 whitespace-nowrap">Date</th>
             <th className="px-4 py-2 whitespace-nowrap">Event Name</th>
             <th className="px-4 py-2 whitespace-nowrap">Venue</th>
-            <th  >action</th>
+            
+            {isAdmin &&<th
+            
+           
+          >
+            delete event
+          </th>}
           </tr>
         </thead>
 
@@ -148,8 +154,8 @@ const UpcomingEvents = () => {
             <td className="px-4 py-2 whitespace-nowrap">{item.Date}</td>
             <td className="px-4 py-2 whitespace-nowrap">{item.Name}</td>
             <td className="px-4 py-2 whitespace-nowrap">{item.Venue}</td>
-            <td><button onClick={async ()=>{await deleteDoc(doc(db, "Upcoming_Tournaments", item.Date))
-          toast.success("Deleted successfully, refresh page")}}>delete</button></td>
+           { isAdmin && <td><button onClick={async ()=>{await deleteDoc(doc(db, "Upcoming_Tournaments", item.Date))
+          toast.success("Deleted successfully, refresh page")}} ><image><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M9 3v1H4v2h1v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1V4h-5V3H9M7 6h10v13H7V6m2 2v9h2V8H9m4 0v9h2V8h-2Z"/></svg></image></button></td>}
           </tr>
         ))}
       </table>
