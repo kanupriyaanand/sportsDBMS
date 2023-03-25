@@ -12,14 +12,22 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { useSelector } from "react-redux";
 import { selectUser } from "../features/userSlice";
+import AddAchievement from "./AddAchievement";
 
 const Achievements = () => {
-
+  const [open2, setOpen] = useState(false);
   const [isAdmin, setAdmin] = useState(false);
+  const [docId, setDocId] = useState("");
   const userVal = useSelector(selectUser);
+  const handleOpen2 = () => setOpen(true);
+  const handleClose2 = () => setOpen(false);
+  const user = useSelector(selectUser);
+
 
   const getUserData1 = async () => {
     const userData = collection(db, "studentUsers");
+    
+    
     const docSnap = await getDocs(
       query(userData, where("Email", "==", userVal.email))
     );
@@ -27,9 +35,12 @@ const Achievements = () => {
     docSnap.forEach((doc) => calling(doc.data()));
   };
 
-  const calling = (data) => {
-    selectUser(data);
-    data.isAdmin && setAdmin(true);
+
+  const calling = (d, id) => {
+    
+    setDocId(id);
+    d.isAdmin && setAdmin(true);
+    console.log(d.isAdmin);
   };
 
   let users = [];
@@ -41,6 +52,15 @@ const Achievements = () => {
     });
     console.log(users);
     setData(users);
+  };
+
+  const getUserDataagain = async () => {
+    const userData = collection(db, "studentUsers");
+    const docSnap = await getDocs(
+      query(userData, where("Email", "==", user.email))
+    );
+
+    docSnap.forEach((doc1) => calling(doc1.data(), doc1.id));
   };
 
   useEffect(() => {
@@ -120,6 +140,12 @@ const   dataPlot =
       <div className="overflow-x-auto max-w-fit rounded-md  bg-black opacity-75 mt-16 px-16 mx-16 text-white whitespace-nowrap">
         <div className="flex w-[45vw] justify-between mt-3">
           <span>Achievements 5th sem- 2022</span>
+          {isAdmin &&<span
+            onClick={handleOpen2}
+            className="ml-10 cursor-pointer bg-blue-700 text-white px-3 py-2 rounded-lg"
+          >
+            Add Achievement
+          </span>}
           <span
             onClick={handlePrint}
             className="ml-10 cursor-pointer bg-blue-700 text-white px-3 py-2 rounded-lg"
@@ -153,6 +179,13 @@ const   dataPlot =
           ))}
         </table>
       </div>
+      <AddAchievement
+        data={data}
+        open={open2}
+        handleClose={handleClose2}
+        docId={docId}
+        admin={isAdmin}
+      />
     </Box>
   );
 };
