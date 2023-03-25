@@ -10,6 +10,12 @@ const Graph = ({ data }) => {
     "basketball",
     "gymnastics",
     "badminton",
+    "volleyball",
+    "javelin",
+    "throwball",
+    "weight lifting",
+    "table tennis",
+    "swimming"
   ];
 
   const options = {
