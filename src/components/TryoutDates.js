@@ -81,7 +81,7 @@ const TryoutDates = ({ open, handleClose }) => {
             onClick={handleOpen2}
             sx={{ flexGrow: 1, marginLeft: "15px" }}
             style={{ float: 'right' }}
-            className="ml-10  cursor-pointer bg-blue-700 text-white px-3 py-2 rounded-lg"
+            className="ml-10 -translate-y-8 cursor-pointer bg-blue-700 text-white px-3 py-2 rounded-lg"
           >
             Add Date
           </span>} 

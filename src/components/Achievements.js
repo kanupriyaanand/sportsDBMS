@@ -118,7 +118,7 @@ const   dataPlot =
         </Toolbar>
       </AppBar>
       <div className="overflow-x-auto max-w-fit rounded-md  bg-black opacity-75 mt-16 px-16 mx-16 text-white whitespace-nowrap">
-        <div className="flex w-[60vw] justify-between mt-3">
+        <div className="flex w-[45vw] justify-between mt-3">
           <span>Achievements 5th sem- 2022</span>
           <span
             onClick={handlePrint}
