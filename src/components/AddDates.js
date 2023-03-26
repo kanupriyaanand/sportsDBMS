@@ -11,11 +11,11 @@ import db from '../firebase';
 
 const style = {
     position: "absolute",
-    top: "50%",
+    top: "55%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: "60vw",
-    bgcolor: "grey",
+    width: "35vw",
+    bgcolor: "black",
     borderRadius: "10px",
     boxShadow: 24,
     maxWidth: 700,
@@ -67,7 +67,7 @@ const AddDates = ({ open, handleClose, data, docId }) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+          <Typography id="modal-modal-title" color="white" variant="h6" component="h2">
             Add Date
           </Typography>
           <div className="mt-2">
