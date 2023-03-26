@@ -85,6 +85,8 @@ const TryoutDates = ({ open, handleClose }) => {
           >
             Add Date
           </span>} 
+
+          
           <div className="mt-2">
           <table className="table overflow-x-auto" id="data-table">
           <thead>

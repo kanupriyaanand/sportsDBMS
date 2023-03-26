@@ -11,6 +11,8 @@ import NotFound from "./components/NotFound";
 import MyProfile from "./components/MyProfile";
 import ViewParticipation from "./components/ViewParticipation";
 import Chatbot from "./components/Chatbot";
+import EditProfile from "./components/EditProfile";
+
 
 function App() {
   const user = useSelector(selectUser);
@@ -51,6 +53,7 @@ function App() {
             <Route path="/upcomingEvents" exact element={<UpcomingEvents />} />
             <Route path="/Achievements" exact element={<Achievements />} />
             <Route path="/myProfile" exact element={<MyProfile />} />
+            <Route path="/edit-profile" exact element={<EditProfile />} />
             <Route
               path="/viewParticipation"
               exact

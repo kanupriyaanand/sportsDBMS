@@ -10,11 +10,34 @@ import db, { auth } from "../firebase";
 import { selectUser } from "../features/userSlice";
 import { useSelector } from "react-redux";
 import { collection, getDocs, query, where } from "firebase/firestore";
+import { useNavigate } from 'react-router-dom';
+import EditProfile from './EditProfile';
+
 
 const MyProfile = () => {
   const [user, setUser] = useState(null);
   const [isAdmin, setAdmin] = useState(false);
   const userVal = useSelector(selectUser);
+  const [editMode, setEditMode] = useState(false);
+  const navigate = useNavigate();
+
+  const handleEditClick = () => {
+    // setEditMode(true);
+    console.log('Clicked')
+    navigate('/edit-profile');
+  }
+
+  const handleSave = (newDetails) => {
+    // Update user details in Firebase database
+    // ...
+
+    setEditMode(false);
+    navigate('/myProfile');
+  }
+  const handleCancel = () => {
+    setEditMode(false);
+    navigate('/myProfile');
+  }
 
   const getUserData = async () => {
     const userData = collection(db, "studentUsers");
@@ -44,6 +67,8 @@ const MyProfile = () => {
     getUserData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  
 
   return (
     <Box
@@ -182,6 +207,7 @@ const MyProfile = () => {
             placeholder="Counselor email"
           />
         </form>
+        <button onClick={handleEditClick}>Edit Profile</button>
       </div>
     </Box>
   );
