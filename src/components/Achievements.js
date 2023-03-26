@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import db, { auth } from "../firebase";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -46,7 +46,7 @@ const Achievements = () => {
   let users = [];
   const [data, setData] = useState([]);
   const getUserData = async () => {
-    const querySnapshot = await getDocs(collection(db, "Achievements"));
+    const querySnapshot = await getDocs(query(collection(db, "Achievements"), orderBy("rank", "asc")));
     querySnapshot.forEach((doc) => {
       users.push(doc.data());
     });
