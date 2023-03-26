@@ -184,7 +184,7 @@ const handleFirstNameChange = (event) => {
   <input type="email" className="px-3 py-2 rounded-md" placeholder={cemail} defaultValue={cemail} onChange={handleCEmailChange} />
   </label>
   
-  <button onClick={handleUpdate}  className="px-3 py-2 rounded-md bg-blue-900 text-white" >Edit Profile</button>
+  <button onClick={handleUpdate}  className="px-3 py-2 rounded-md bg-blue-900 text-white" >Submit details</button>
   </form>
   
 </div>
