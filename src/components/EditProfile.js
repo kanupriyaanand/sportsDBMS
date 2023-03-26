@@ -3,8 +3,12 @@ import React, {useEffect, useState } from 'react';
 import db, { auth } from "../firebase";
 import { selectUser } from "../features/userSlice";
 import { useSelector } from "react-redux";
-import { collection, getDocs, query, where, doc, updateDoc } from "firebase/firestore";
+import { collection, getDocs, query, where, doc, updateDoc, documentId } from "firebase/firestore";
+import AppBar from "@mui/material/AppBar";
 
+import Toolbar from "@mui/material/Toolbar";
+
+import Button from "@mui/material/Button";
 
 
 import Box from "@mui/material/Box";
@@ -27,7 +31,7 @@ const style = {
     p: 4,
   };
 
-function EditProfile(props) {
+function EditProfile({docId}) {
     const [user, setUser] = useState(null);
     const [isAdmin, setAdmin] = useState(false);
     const userVal = useSelector(selectUser);
@@ -88,7 +92,7 @@ const [cemail, setCEmail] = useState('');
 //   }
 // getUserIdByFirstName(firstName);
   async function handleUpdate() {
-    const userDocRef = doc(db, "studentUsers", 'bUixQrjLJ4KGtU69ET4O');
+    const userDocRef = doc(db, "studentUsers", docId);
     try {
       await updateDoc(userDocRef, { First_name: firstName, Last_name: lastName , Email: email, Mobile_number: mobilenumber, Username: username, USN: usn, date_of_birth: dateofbirth, semester: semester, Counselor_email: cemail});
       console.log("name updated successfully");
@@ -128,49 +132,64 @@ const handleFirstNameChange = (event) => {
   };
 
   return (
-    <div>
-      <h2>Edit Profile</h2>
-    
-          <label>
-        First Name:
-        <input type="text" placeholder={firstName} defaultValue={firstName} onChange={handleFirstNameChange} />
-        </label>
-        <label>
-        Last Name: 
-        <input type="text" placeholder={lastName} defaultValue={lastName} onChange={handleLastNameChange} />
-        </label>
-        <label>
-        Email: 
-        <input type="text" placeholder={email} defaultValue={email} onChange={handleEmailChange} />
-        </label>
-        <label>
-        Mobile Number: 
-        <input type="text" placeholder={mobilenumber} defaultValue={mobilenumber} onChange={handlemobileChange} />
-        </label>
-        <label>
-        Username: 
-        <input type="text" placeholder={username} defaultValue={username} onChange={handleusernameChange} />
-        </label>
-        <label>
-        USN: 
-        <input type="text" placeholder={usn} defaultValue={usn} onChange={handleusnChange} />
-        </label>
-        <label>
-        DOB: 
-        <input type="text" placeholder={dateofbirth} defaultValue={dateofbirth} onChange={handledobChange} />
-        </label>
-        <label>
-        Semester: 
-        <input type="text" placeholder={semester} defaultValue={semester} onChange={handleSemChange} />
-        </label>
-        <label>
-        Counselor Email: 
-        <input type="text" placeholder={cemail} defaultValue={cemail} onChange={handleCEmailChange} />
-        </label>
-        <button onClick={handleUpdate}>Edit Profile</button>
 
-        
-    </div>
+    <Box sx={{ flexGrow: 1 }}
+    className="bg-logged-in bg-right min-h-[100vh] bg-cover">
+        <AppBar position="static">
+        <Toolbar sx={{ paddingY: "10px" }}>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1, marginLeft: "15px" }}
+          >
+            Edit Profile
+          </Typography>
+
+         
+        </Toolbar>
+      </AppBar>
+        <div className="bg-white bg-opacity-60 rounded-lg p-5 my-auto flex justify-center mt-10 w-fit mx-auto">
+        <form className="flex flex-col justify-center space-y-5 w-[40vw]">
+    <label>
+  First Name:
+  <input type="text" className="px-3 py-2 rounded-md" placeholder={firstName} defaultValue={firstName} onChange={handleFirstNameChange} />
+  </label>
+  <label>
+  Last Name: 
+  <input type="text" className="px-3 py-2 rounded-md" placeholder={lastName} defaultValue={lastName} onChange={handleLastNameChange} />
+  </label>
+  <label>
+  Email: 
+  <input type="email" className="px-3 py-2 rounded-md" placeholder={email} defaultValue={email} onChange={handleEmailChange} />
+  </label>
+  <label>
+  Mobile Number: 
+  <input type="tel" className="px-3 py-2 rounded-md" placeholder={mobilenumber} defaultValue={mobilenumber} onChange={handlemobileChange} />
+  </label>
+  <label>
+  Username: 
+  <input type="text" className="px-3 py-2 rounded-md" placeholder={username} defaultValue={username} onChange={handleusernameChange} />
+  </label>
+  
+  <label>
+  DOB: 
+  <input type="date" className="px-3 py-2 rounded-md" placeholder={dateofbirth} defaultValue={dateofbirth} onChange={handledobChange} />
+  </label>
+  <label>
+  Semester: 
+  <input type="undefined" className="px-3 py-2 rounded-md" placeholder={semester} defaultValue={semester} onChange={handleSemChange} />
+  </label>
+  <label>
+  Counselor Email: 
+  <input type="email" className="px-3 py-2 rounded-md" placeholder={cemail} defaultValue={cemail} onChange={handleCEmailChange} />
+  </label>
+  
+  <button onClick={handleUpdate}  className="px-3 py-2 rounded-md bg-blue-900 text-white" >Edit Profile</button>
+  </form>
+  
+</div>
+
+    </Box>
   );
 }
 
