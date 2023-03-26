@@ -16,7 +16,7 @@ const SignInScreen = ({ setSignIn }) => {
 
   const departmentNames = [
     "AS",
-    "IS",
+    "ISE",
     "CS",
     "EC",
     "ET",
