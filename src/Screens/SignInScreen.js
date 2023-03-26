@@ -153,7 +153,7 @@ const SignInScreen = ({ setSignIn }) => {
           })}
         />
         <div className="text-red-700">{errors.semester?.message}</div>
-
+        {/* <h1 className="text-left mb-1 text-white text-1x0.5">DOB</h1> */}
         <input
           className="px-3 py-2 rounded-md"
           type="date"
@@ -164,13 +164,14 @@ const SignInScreen = ({ setSignIn }) => {
             required: true,
           })}
         />
+        
         <select
           className="px-3 py-2 rounded-md"
-          {...register("gender")}
+          {...register("department")}
           required
         >
           <option value={null} selected disabled hidden>
-            Select Department
+          Select Department
           </option>
           <option value="AS">AS</option>
           <option value="AIML">CS</option>

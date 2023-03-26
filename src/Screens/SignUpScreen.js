@@ -25,12 +25,12 @@ function SignUpScreen({ setSignUp }) {
       });
   };
   return (
-    <div className="bg-black bg-opacity-60 rounded-lg p-5 my-auto">
+    <div className="bg-black bg-opacity-60 rounded-lg p-3 my-auto">
       <Toaster />
       <h1 className="text-center mb-4 text-white text-2xl">Sign In</h1>
       <form
         action=""
-        className="flex flex-col justify-center space-y-5 w-[40vw]"
+        className="flex flex-col justify-center space-y-3 w-[25vw]"
       >
         <input
           ref={emailRef}
