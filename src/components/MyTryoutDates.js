@@ -1,14 +1,19 @@
 import { Box, Modal, Typography } from '@mui/material';
-import React from 'react'
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form';
 import { Toaster } from 'react-hot-toast';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../features/userSlice';
+import db from '../firebase';
 
 
 const style = {
     position: "absolute",
     top: "50%",
-    left: "50%",
+    left: "50%", 
     transform: "translate(-50%, -50%)",
-    width: "60vw",
+    width: "20vw",
     bgcolor: "background.paper",
     borderRadius: "10px",
     boxShadow: 24,
@@ -19,6 +24,45 @@ const style = {
 
 
 const MyTryoutDates = ({ open, handleClose }) => {
+  const { register, handleSubmit, reset } = useForm();
+  const [docId, setDocId] = useState("");
+  const [data1, setData1] = useState([]);
+  const user = useSelector(selectUser);
+  const [sportNames, setSportNames]= useState([]);
+  
+  const getSportdata= async() => {
+    const CollectionR = collection(db, `sports`);
+    const col = await getDocs(CollectionR);
+    col.forEach((col) => {
+     setSportNames(col.data().Game)}
+    )};
+  
+    const getUserDataagain = async() => {
+      const userData = collection(db, "studentUsers");
+      const docSnap = await getDocs(
+        query(userData, where("Email", "==", user.email))
+      );
+      docSnap.forEach((doc) => calling(doc.data(), doc.id));
+    };
+    
+
+    const getRegistered= async()=>{const userData = collection(db, "studentUsers");
+    const docSnap = await getDocs(
+      query(userData, where("Email", "==", user.email))
+    );
+    docSnap.forEach((doc) => calling(doc.data(), doc.id));};
+
+    const calling = (d, id) => {
+      setData1(d);
+      setDocId(id);
+      
+    };
+
+  useEffect(()=>{
+    getUserDataagain();
+    getSportdata();
+  }, [])
+
   return (
     <>
        <Toaster />
