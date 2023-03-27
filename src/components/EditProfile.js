@@ -1,5 +1,4 @@
 import React, {useEffect, useState } from 'react';
-
 import db, { auth } from "../firebase";
 import { selectUser } from "../features/userSlice";
 import { useSelector } from "react-redux";
@@ -31,7 +30,8 @@ const style = {
     p: 4,
   };
 
-function EditProfile({docId}) {
+function EditProfile() {
+    const { handleSubmit, reset } = useForm();
     const [user, setUser] = useState(null);
     const [isAdmin, setAdmin] = useState(false);
     const userVal = useSelector(selectUser);
@@ -45,6 +45,7 @@ const [usn, setUsn] = useState('');
 const [dateofbirth, setdob] = useState('');
 const [semester, setSemester] = useState('');
 const [cemail, setCEmail] = useState('');
+const [docId, setDocId] = useState("");
 
 
 
@@ -55,11 +56,12 @@ const [cemail, setCEmail] = useState('');
           query(userData, where("Email", "==", userVal.email))
         );
     
-        docSnap.forEach((doc) => calling(doc.data()));
+        docSnap.forEach((doc) => calling(doc.data(),doc.id));
       };
     
-      const calling = (data) => {
+      const calling = (data,id) => {
         setUser(data);
+        setDocId(id);
         data.isAdmin && setAdmin(true);
         console.log(data)
         setFirstName(user?.First_name)
@@ -74,6 +76,8 @@ const [cemail, setCEmail] = useState('');
 
       };
     getUserData();
+
+
 
   }, []);
 
@@ -91,7 +95,7 @@ const [cemail, setCEmail] = useState('');
 //     }
 //   }
 // getUserIdByFirstName(firstName);
-  async function handleUpdate() {
+  /*async function handleUpdate() {
     const userDocRef = doc(db, "studentUsers", docId);
     try {
       await updateDoc(userDocRef, { First_name: firstName, Last_name: lastName , Email: email, Mobile_number: mobilenumber, Username: username, USN: usn, date_of_birth: dateofbirth, semester: semester, Counselor_email: cemail});
@@ -99,7 +103,51 @@ const [cemail, setCEmail] = useState('');
     } catch (error) {
       console.error("Error updating first name: ", error);
     }
-  }
+  }*/
+
+  async function handleUpdate() {
+    //console.log(dataForm);
+    const CollectionRef = doc(db, "studentUsers", docId);
+    try {
+      
+    await updateDoc(CollectionRef, {First_name: firstName,Last_name: lastName,semester: semester,Mobile_number: mobilenumber, Username: username,USN: usn,date_of_birth: dateofbirth});
+    console.log("name updated"); 
+
+
+      /*const userData = collection(db, "studentUsers");
+      const docSnap = await updateDoc(userData, { First_name: firstName});
+      docSnap.forEach((doc) => calling(doc.data()));
+      const calling = (data) => {
+        setUser(data);
+        data.isAdmin && setAdmin(true);
+        console.log(data)
+        
+      };*/
+      //reset();
+
+      //const collectionRef = collection(db, dataForm.gameName);
+
+      /*const checkForDuplicate = async () => {
+        const docSnap = await getDocs(
+          query(collectionRef, where("Email", "==", user.email))
+        );
+        if (docSnap.empty) {
+          await addDoc(collectionRef, { ...data, dataForm });
+          toast.success("Registered Successfully");
+        } else {
+          toast.error("User already registered");
+        }
+      };*/
+      
+
+      
+      //checkForDuplicate();
+      //handleClose();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
 
  
 const handleFirstNameChange = (event) => {
@@ -109,8 +157,8 @@ const handleFirstNameChange = (event) => {
   const handleLastNameChange = (event) => {
     setLastName(event.target.value);
   };
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
+  const handleSemChange = (event) => {
+    setSemester(event.target.value);
   };
   const handlemobileChange = (event) => {
     setMobileNumber(event.target.value);
@@ -124,12 +172,17 @@ const handleFirstNameChange = (event) => {
   const handledobChange = (event) => {
     setdob(event.target.value);
   };
-  const handleSemChange = (event) => {
-    setSemester(event.target.value);
+  /*const handleEmailChange = (event) => {
+    setEmail(event.target.value);
   };
+  
+  
+  
+  
+  
   const handleCEmailChange = (event) => {
     setCEmail(event.target.value);
-  };
+  };*/
 
   return (
 
@@ -149,46 +202,50 @@ const handleFirstNameChange = (event) => {
         </Toolbar>
       </AppBar>
         <div className="bg-white bg-opacity-60 rounded-lg p-5 my-auto flex justify-center mt-10 w-fit mx-auto">
-        <form className="flex flex-col justify-center space-y-5 w-[40vw]">
+        <form className="flex flex-col justify-center space-y-5 w-[40vw]"
+        >
     <label>
   First Name:
   <input type="text" className="px-3 py-2 rounded-md" placeholder={firstName} defaultValue={firstName} onChange={handleFirstNameChange} />
   </label>
+  
   <label>
   Last Name: 
   <input type="text" className="px-3 py-2 rounded-md" placeholder={lastName} defaultValue={lastName} onChange={handleLastNameChange} />
   </label>
+
   <label>
-  Email: 
-  <input type="email" className="px-3 py-2 rounded-md" placeholder={email} defaultValue={email} onChange={handleEmailChange} />
+  Semester: 
+  <input type="text" className="px-3 py-2 rounded-md" placeholder={semester} defaultValue={semester} onChange={handleSemChange} />
   </label>
+
   <label>
   Mobile Number: 
   <input type="tel" className="px-3 py-2 rounded-md" placeholder={mobilenumber} defaultValue={mobilenumber} onChange={handlemobileChange} />
   </label>
+
   <label>
   Username: 
   <input type="text" className="px-3 py-2 rounded-md" placeholder={username} defaultValue={username} onChange={handleusernameChange} />
   </label>
-  
+
+
+  <label>
+  USN: 
+  <input type="text" className="px-3 py-2 rounded-md" placeholder={usn} defaultValue={usn} onChange={handleusnChange} />
+  </label>
+
   <label>
   DOB: 
   <input type="date" className="px-3 py-2 rounded-md" placeholder={dateofbirth} defaultValue={dateofbirth} onChange={handledobChange} />
   </label>
-  <label>
-  Semester: 
-  <input type="undefined" className="px-3 py-2 rounded-md" placeholder={semester} defaultValue={semester} onChange={handleSemChange} />
-  </label>
-  <label>
-  Counselor Email: 
-  <input type="email" className="px-3 py-2 rounded-md" placeholder={cemail} defaultValue={cemail} onChange={handleCEmailChange} />
-  </label>
+
   
   <button onClick={handleUpdate}  className="px-3 py-2 rounded-md bg-blue-900 text-white" >Edit Profile</button>
   </form>
   
 </div>
-
+    docId={docId}
     </Box>
   );
 }

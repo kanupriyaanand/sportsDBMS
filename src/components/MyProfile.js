@@ -206,7 +206,7 @@ const MyProfile = () => {
             type="email"
             placeholder="Counselor email"
           />
-          <button onClick={handleEditClick} className="px-3 py-2 rounded-md bg-blue-900 text-white" >Edit Profile</button>
+          <button onClick={handleEditClick} className="px-3 py-2 rounded-md bg-blue-900 text-white">Edit Profile</button>
         </form>
         
       </div>
