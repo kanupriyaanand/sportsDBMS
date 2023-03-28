@@ -74,7 +74,7 @@ const AddSport = ({ open, handleClose, data, docId }) => {
                 className="px-3 py-2 rounded-md"
                 type="text"
                 {...register("Name", {required:true, pattern: {
-                  value: /^[A-Za-z]*$/,
+                  value: /^[A-Za-z ]*$/,
                   message: "only characters to be entered",
                 } })}
                 placeholder="Enter new sport"

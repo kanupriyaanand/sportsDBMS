@@ -74,7 +74,7 @@ const AddAchievement = ({ open, handleClose, data, docId }) => {
                   className="px-3 py-2 rounded-md"
                   type="text"
                   {...register("Name",{ required: true, maxLength: 80, pattern: {
-                    value: /^[A-Za-z]*$/,
+                    value: /^[A-Za-z ]*$/,
                     message: "only characters to be entered",
                   }})}
                   placeholder="Enter student name"
@@ -85,7 +85,7 @@ const AddAchievement = ({ open, handleClose, data, docId }) => {
                   className="px-3 py-2 rounded-md"
                   type="text"
                   {...register("Game",{ required: true, maxLength: 80, pattern: {
-                    value: /^[A-Za-z]*$/,
+                    value: /^[A-Za-z ]*$/,
                     message: "only characters to be entered",
                   }})}
                   placeholder="enter sport"

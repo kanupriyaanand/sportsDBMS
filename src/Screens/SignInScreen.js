@@ -66,7 +66,7 @@ const SignInScreen = ({ setSignIn }) => {
           placeholder="First name"
 
           {...register("First_name", { required: true, maxLength: 80, pattern: {
-              value: /^[A-Za-z]*$/,
+              value: /^[A-Za-z ]*$/,
               message: "only characters to be entered",
             }})}
         />
