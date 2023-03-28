@@ -1,5 +1,5 @@
 import { Box, Modal, Typography } from '@mui/material';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs, getFirestore, query, where, listCollections } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { Toaster } from 'react-hot-toast';
@@ -30,6 +30,7 @@ const MyTryoutDates = ({ open, handleClose }) => {
   const user = useSelector(selectUser);
   const [sportNames, setSportNames]= useState([]);
   
+
   const getSportdata= async() => {
     const CollectionR = collection(db, `sports`);
     const col = await getDocs(CollectionR);
@@ -46,11 +47,62 @@ const MyTryoutDates = ({ open, handleClose }) => {
     };
     
 
-    const getRegistered= async()=>{const userData = collection(db, "studentUsers");
-    const docSnap = await getDocs(
-      query(userData, where("Email", "==", user.email))
-    );
-    docSnap.forEach((doc) => calling(doc.data(), doc.id));};
+  
+    const db1 = getFirestore(); // assume that you've already initialized Firestore
+
+    // const getSportData = async () => {
+    //   try {
+    //     const collections = await listCollections(db); // get a list of all collections in the database
+    //     const sportNames = [];
+    
+    //     for (const collectionRef of collections) {
+    //       const collectionName = collectionRef.id; // get the name of the collection
+    //       const collectionDocs = await getDocs(collectionRef); // get the documents in the collection
+    //       const data = collectionDocs.docs.map((doc) => doc.data()); // extract the data from each document
+    //       sportNames.push({
+    //         name: collectionName,
+    //         data: data,
+    //       }); // add the collection name and data to the sportNames array
+    //     }
+    
+    //     setSportNames(sportNames);
+    //   } catch (error) {
+    //     console.error(error);
+    //     // handle error
+    //   }
+    // };
+    
+    
+
+
+  const checkEmailInCollections = async (email, sportsNames) => {
+    try {
+      for (const { name, data } of sportsNames) {
+        const isEmailPresent = Object.values(data).some(value => typeof value === "string" && value.includes(email));
+        
+        if (!isEmailPresent) {
+          return false;
+        }
+      }
+      return true;
+    } catch (error) {
+      console.error(error);
+      // handle error
+    }
+  };
+
+  let dates = [];
+  const [data, setData] = useState([]);
+const getDates= async() => {
+  const querySnapshot = await getDocs(query(collection(db, "TryoutDates")));
+  querySnapshot.forEach((doc) => {
+    dates.push(doc.data());
+  });
+  
+  setData(dates);
+};
+  console.log(data);
+
 
     const calling = (d, id) => {
       setData1(d);
@@ -59,10 +111,12 @@ const MyTryoutDates = ({ open, handleClose }) => {
     };
 
   useEffect(()=>{
-    getUserDataagain();
+    getDates();
     getSportdata();
+    getUserDataagain();
+    //getApplicants();
   }, [])
-
+  
   return (
     <>
        <Toaster />
@@ -84,10 +138,15 @@ const MyTryoutDates = ({ open, handleClose }) => {
             <tr className="grid-cols-2">
               <th className="px-4 py-2 whitespace-nowrap">Game</th>
               <th className="px-2 py-2 whitespace-nowrap">Date</th>
-
+              
             </tr>
           </thead>
-
+          {data.map((item) => (
+            <tr id={item.Name}>
+              <td className="grid-cols-6 text-center">{item.gameName}</td>
+              <td className="px-3 py-2  whitespace-nowrap">{item.Date}</td>
+              
+            </tr>))}
           
         </table>
            
