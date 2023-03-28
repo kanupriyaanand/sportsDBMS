@@ -96,6 +96,10 @@ const HomeScreen = () => {
       "badminton",
       "volleyball",
       "swimming",
+      "weight lifting",
+      "table tennis",
+      "high jump",
+      "long jump",
       "tennis"
     ];
     game.forEach(async (i) => {

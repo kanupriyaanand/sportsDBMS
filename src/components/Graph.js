@@ -15,6 +15,10 @@ const Graph = ({ data }) => {
     "throwball",
     "weight lifting",
     "tennis",
+    "weight lifting",
+      "table tennis",
+      "high jump",
+      "long jump",
     "swimming"
   ];
 
