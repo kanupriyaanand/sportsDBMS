@@ -33,6 +33,8 @@ const MyTryoutDates = ({ open, handleClose }) => {
   const [matchedDates, setMatchedDates] = useState([])
   var [tryout, setTryout] = useState("")
   let tryoutDates = []
+  let dates = [];
+  const [data, setData] = useState([]);
  
   const getSportdata= async() => {
     const CollectionR = collection(db, `sports`);
@@ -50,47 +52,46 @@ const MyTryoutDates = ({ open, handleClose }) => {
     };
     
 
-  let dates = [];
-  const [data, setData] = useState([]);
-const getDates= async() => {
-  const querySnapshot = await getDocs(query(collection(db, "TryoutDates")));
-  querySnapshot.forEach((doc) => {
-    dates.push(doc.data());
-  });
-  
-  setData(dates);
-};
- const calling = (d, id) => {
-      setData1(d);
-      setDocId(id);
-      
-    };
+  const getDates= async() => {
+    const querySnapshot = await getDocs(query(collection(db, "TryoutDates")));
+    querySnapshot.forEach((doc) => {
+      dates.push(doc.data());
+    });
+    
+    setData(dates);
+  };
+  const calling = (d, id) => {
+        setData1(d);
+        setDocId(id);
+        
+      };
 
   useEffect(()=>{
     getDates();
     getSportdata();
-    getUserDataagain();
-    //getApplicants();
     getSports();
+    getUserDataagain();
+    setMyGames(tryoutDates)
     setMatchedDates(getMatch(data, games))
-  }, [])
+  }, [data])
 
-  const getSports = () => {sportNames.forEach(async (e)=> {
+  const getSports = () => {
+    sportNames.forEach(async (e)=> {
     const newColl = collection(db, e)
     const col = await getDocs(
       query(newColl, where('Email',"==", user.email))
     )
-    col.forEach((doc) => { 
-      const tryData = doc.data().dataForm.gameName
-      tryoutDates.push(tryData)      })
+    col.forEach(async (doc) => { 
+      console.log(doc.data())
+      tryoutDates.push(doc.data().dataForm.gameName)      
     })
-    setMyGames(tryoutDates)
-
-  console.log(games.length)
-
+    })
+    console.log(tryoutDates)
+    console.log(games.length)
 }
   const getMatch = (a, b) => {
     var matches = [];
+    console.log(a,b)
     for ( var i = 0; i < a.length; i++ ) {
       for ( var e = 0; e < b.length; e++ ) {
         console.log(a[i].gameName, b[e])
