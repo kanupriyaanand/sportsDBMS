@@ -1,7 +1,7 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useRef } from "react";
 import { toast, Toaster } from "react-hot-toast";
-import { auth } from "../firebase";
+import { auth, signInWithGoogle } from "../firebase";
 
 function SignUpScreen({ setSignUp }) {
   const emailRef = useRef(null);
@@ -53,6 +53,16 @@ function SignUpScreen({ setSignUp }) {
         >
           Sign In
         </button>
+
+        <div className="text-center px-3 py-2 rounded-md bg-blue-900 text-white">
+        <button className="glassmorphism-login_btn glassmorphism-login_google" onClick={(event)=>
+        { event.preventDefault();
+          signInWithGoogle();
+        }
+        }>
+        Login with Google
+      </button>
+        </div>
       </form>
       <h4 className="mt-4 text-center text-white text-sm">OR</h4>
       <div
