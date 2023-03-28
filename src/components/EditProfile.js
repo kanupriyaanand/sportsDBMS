@@ -31,7 +31,13 @@ const style = {
   };
 
 function EditProfile() {
-    const { handleSubmit, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
     const [user, setUser] = useState(null);
     const [isAdmin, setAdmin] = useState(false);
     const userVal = useSelector(selectUser);
@@ -206,38 +212,80 @@ const handleFirstNameChange = (event) => {
         >
     <label>
   First Name:
-  <input type="text" className="px-3 py-2 rounded-md" placeholder={firstName} defaultValue={firstName} onChange={handleFirstNameChange} />
+  <input type="text" className="px-3 py-2 rounded-md" placeholder={firstName} {...register("First_name", { required: true, maxLength: 80 })} defaultValue={firstName} onChange={handleFirstNameChange} />
   </label>
   
   <label>
   Last Name: 
-  <input type="text" className="px-3 py-2 rounded-md" placeholder={lastName} defaultValue={lastName} onChange={handleLastNameChange} />
+  <input type="text" className="px-3 py-2 rounded-md" placeholder={lastName} {...register("Last_name", { required: true, maxLength: 100 })} defaultValue={lastName} onChange={handleLastNameChange} />
   </label>
 
   <label>
   Semester: 
-  <input type="text" className="px-3 py-2 rounded-md" placeholder={semester} defaultValue={semester} onChange={handleSemChange} />
+  <input type="number" className="px-3 py-2 rounded-md" placeholder={semester} min={1}
+          max={8}
+          
+          {...register("semester", {
+            required: true,
+            maxLength: { value: 1, message: "enter a number between 1 and 8" },
+            min: {
+              value: 1,
+              message: "Enter a value greater than or equal to 1",
+            },
+            max: {
+              value: 8,
+              message: "Enter a value less than or equal to 8",
+            },
+          })}defaultValue={semester} onChange={handleSemChange} />
+          <div className="text-red-700">{errors.semester?.message}</div>
   </label>
 
   <label>
   Mobile Number: 
-  <input type="tel" className="px-3 py-2 rounded-md" placeholder={mobilenumber} defaultValue={mobilenumber} onChange={handlemobileChange} />
+  <input type="tel" className="px-3 py-2 rounded-md" placeholder={mobilenumber} {...register("Mobile_number", {
+            required: true,
+
+            minLength: {
+              value: 10,
+              message: "enter a 10 digit phone number",
+            },
+            maxLength: {
+              value: 10,
+              message: "enter a 10 digit phone number",
+            },
+            pattern: {
+              value: /(?:\d)(?:\d)(?:\d)(?:\d)(?:\d)(?:\d)(?:\d)(?:\d)(?:\d)(?:\d)$/,
+              message: "only numbers to be entered",
+            },
+          })} defaultValue={mobilenumber} onChange={handlemobileChange} />
+          <div className="text-red-700">{errors.Mobile_number?.message}</div>
   </label>
 
   <label>
   Username: 
-  <input type="text" className="px-3 py-2 rounded-md" placeholder={username} defaultValue={username} onChange={handleusernameChange} />
+  <input type="text" className="px-3 py-2 rounded-md" placeholder={username} {...register("Username", { required: true })} defaultValue={username} onChange={handleusernameChange} />
   </label>
 
 
   <label>
   USN: 
-  <input type="text" className="px-3 py-2 rounded-md" placeholder={usn} defaultValue={usn} onChange={handleusnChange} />
+  <input type="text" className="px-3 py-2 rounded-md" placeholder={usn} {...register("USN", {
+            required: true,
+            pattern: {
+              value: /(?:1RV)(?:\d)(?:\d)(?:[A-Z])(?:[A-Z])(?:\d)(?:\d)(?:\d)$/,
+              message: "Please enter a valid USN",
+            },
+            maxLength: { value: 10, message: "enter valid USN" },
+          })}  defaultValue={usn} onChange={handleusnChange} />
+          <div className="text-red-700">{errors.USN?.message}</div>
   </label>
 
   <label>
   DOB: 
-  <input type="date" className="px-3 py-2 rounded-md" placeholder={dateofbirth} defaultValue={dateofbirth} onChange={handledobChange} />
+  <input type="date" className="px-3 py-2 rounded-md" placeholder={dateofbirth} min="1990-01-01"
+          max="2006-12-31" {...register("date_of_birth", {
+            required: true,
+          })} defaultValue={dateofbirth} onChange={handledobChange} />
   </label>
 
   
