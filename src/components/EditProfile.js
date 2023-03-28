@@ -212,12 +212,20 @@ const handleFirstNameChange = (event) => {
         >
     <label>
   First Name:
-  <input type="text" className="px-3 py-2 rounded-md" placeholder={firstName} {...register("First_name", { required: true, maxLength: 80 })} defaultValue={firstName} onChange={handleFirstNameChange} />
+  <input type="text" className="px-3 py-2 rounded-md" placeholder={firstName} {...register("First_name", { required: true, maxLength: 80, pattern: {
+              value: /^[A-Za-z ]*$/,
+              message: "only characters to be entered",
+            }})} defaultValue={firstName} onChange={handleFirstNameChange} />
+            <div className="text-red-700">{errors.First_name?.message}</div>
   </label>
   
   <label>
   Last Name: 
-  <input type="text" className="px-3 py-2 rounded-md" placeholder={lastName} {...register("Last_name", { required: true, maxLength: 100 })} defaultValue={lastName} onChange={handleLastNameChange} />
+  <input type="text" className="px-3 py-2 rounded-md" placeholder={lastName} {...register("Last_name", { required: true, maxLength: 100,pattern: {
+            value: /^[A-Za-z]*$/,
+            message: "only characters to be entered",
+          } })} defaultValue={lastName} onChange={handleLastNameChange} />
+          <div className="text-red-700">{errors.Last_name?.message}</div>
   </label>
 
   <label>
