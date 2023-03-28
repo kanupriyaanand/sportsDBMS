@@ -26,9 +26,9 @@ const style = {
 
 
 const AddAchievement = ({ open, handleClose, data, docId }) => {
-    const { register, handleSubmit, reset } = useForm();
+    const { register, handleSubmit, reset, formState: { errors }, } = useForm();
     const user = useSelector(selectUser);
-  
+    
     const onSubmit = async (dataForm) => {
     
       try {
@@ -73,33 +73,71 @@ const AddAchievement = ({ open, handleClose, data, docId }) => {
                 <input
                   className="px-3 py-2 rounded-md"
                   type="text"
-                  {...register("Name")}
+                  {...register("Name",{ required: true, maxLength: 80, pattern: {
+                    value: /^[A-Za-z]*$/,
+                    message: "only characters to be entered",
+                  }})}
                   placeholder="Enter student name"
                   required
                 />
-  
+  <div className="text-red-700">{errors.First_name?.message}</div>
                 <input
                   className="px-3 py-2 rounded-md"
                   type="text"
-                  {...register("Game")}
+                  {...register("Game",{ required: true, maxLength: 80, pattern: {
+                    value: /^[A-Za-z]*$/,
+                    message: "only characters to be entered",
+                  }})}
                   placeholder="enter sport"
                   required
                 />
-  
+  <div className="text-red-700">{errors.First_name?.message}</div>
+  <select
+          className="px-3 py-2 rounded-md"
+          {...register("department")}
+          required
+        >
+          <option value={null} selected disabled hidden>
+          Select Department
+          </option>
+          <option value="AS">AS</option>
+          <option value="AIML">CS</option>
+          <option value="CH">CH</option>
+          <option value="CS">CS</option>
+          <option value="CV">CV</option>
+          <option value="DS">DS</option>
+          <option value="EC">EC</option>
+          <option value="EE">EE</option>
+          <option value="EI">EI</option>
+          <option value="ET">ET</option>
+          <option value="IS">IS</option>
+          <option value="IM">IM</option>
+          <option value="ME">ME</option>
+          <option value="MCA">MCA</option>
+          <option value="M.Tech">M.Tech</option>
+
+        </select>
                 <input
                   className="px-3 py-2 rounded-md"
-                  type="text"
-                  {...register("Department")}
-                  placeholder="department"
-                  required
-                />
-                <input
-                  className="px-3 py-2 rounded-md"
-                  type="text"
-                  {...register("Semester")}
+                  type="number"
+          min={1}
+          max={8}
+                  {...register("Semester", {
+                    required: true,
+                    maxLength: { value: 1, message: "enter a number between 1 and 8" },
+                    min: {
+                      value: 1,
+                      message: "Enter a value greater than or equal to 1",
+                    },
+                    max: {
+                      value: 8,
+                      message: "Enter a value less than or equal to 8",
+                    },
+                  })}
                   placeholder="semester"
-                  required
+                  
                 />
+                <div className="text-red-700">{errors.semester?.message}</div>
                 <input
                   className="px-3 py-2 rounded-md"
                   type="text"

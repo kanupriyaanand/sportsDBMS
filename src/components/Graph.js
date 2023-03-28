@@ -14,7 +14,7 @@ const Graph = ({ data }) => {
     "javelin",
     "throwball",
     "weight lifting",
-    "table tennis",
+    "tennis",
     "swimming"
   ];
 

@@ -68,7 +68,7 @@ const AddDates = ({ open, handleClose, data, docId }) => {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" color="white" variant="h6" component="h2">
-            Add Date
+            Add/Edit Date
           </Typography>
           <div className="mt-2">
             <form
@@ -96,6 +96,7 @@ const AddDates = ({ open, handleClose, data, docId }) => {
               <input
                 className="px-3 py-2 rounded-md"
                 type="date"
+                min="2023-03-29"
                 {...register("Date")}
                 placeholder="enter try-out date"
                 required

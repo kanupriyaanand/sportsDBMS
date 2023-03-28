@@ -88,6 +88,7 @@ const AddEvent = ({ open, handleClose, data, docId }) => {
                 className="px-3 py-2 rounded-md"
                 type="date"
                 {...register("Date")}
+                min="2023-03-29"
                 placeholder="enter event date"
                 required
               />

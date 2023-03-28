@@ -64,14 +64,23 @@ const SignInScreen = ({ setSignIn }) => {
           type="text"
           className="px-3 py-2 rounded-md"
           placeholder="First name"
-          {...register("First_name", { required: true, maxLength: 80 })}
+
+          {...register("First_name", { required: true, maxLength: 80, pattern: {
+              value: /^[A-Za-z]*$/,
+              message: "only characters to be entered",
+            }})}
         />
+         <div className="text-red-700">{errors.First_name?.message}</div>
         <input
           type="text"
           className="px-3 py-2 rounded-md"
           placeholder="Last name"
-          {...register("Last_name", { required: true, maxLength: 100 })}
+          {...register("Last_name", { required: true, maxLength: 100,pattern: {
+            value: /^[A-Za-z]*$/,
+            message: "only characters to be entered",
+          } })}
         />
+        <div className="text-red-700">{errors.Last_name?.message}</div>
         <input
           type="text"
           className="px-3 py-2 rounded-md"
@@ -178,6 +187,7 @@ const SignInScreen = ({ setSignIn }) => {
           <option value="CH">CH</option>
           <option value="CS">CS</option>
           <option value="CV">CV</option>
+          <option value="DS">DS</option>
           <option value="EC">EC</option>
           <option value="EE">EE</option>
           <option value="EI">EI</option>

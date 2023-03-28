@@ -94,6 +94,9 @@ const HomeScreen = () => {
       "basketball",
       "gymnastics",
       "badminton",
+      "volleyball",
+      "swimming",
+      "tennis"
     ];
     game.forEach(async (i) => {
       const querySnapshot = await getDocs(collection(db, i));

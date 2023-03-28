@@ -83,7 +83,7 @@ const TryoutDates = ({ open, handleClose }) => {
             style={{ float: 'right' }}
             className="ml-10 -translate-y-8 cursor-pointer bg-blue-700 text-white px-3 py-2 rounded-lg"
           >
-            Add Date
+            Add/Edit
           </span>} 
 
           

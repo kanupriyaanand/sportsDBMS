@@ -27,7 +27,7 @@ const style = {
 
 
 const AddSport = ({ open, handleClose, data, docId }) => {
-    const { register, handleSubmit, reset } = useForm();
+    const { register, handleSubmit, reset,formState: { errors } } = useForm();
 
     const onSubmit = async (dataForm) => {
      
@@ -73,11 +73,14 @@ const AddSport = ({ open, handleClose, data, docId }) => {
               <input
                 className="px-3 py-2 rounded-md"
                 type="text"
-                {...register("Name")}
+                {...register("Name", {required:true, pattern: {
+                  value: /^[A-Za-z]*$/,
+                  message: "only characters to be entered",
+                } })}
                 placeholder="Enter new sport"
                 required
               />
-
+<div className="text-red-700">{errors.Name?.message}</div>
               <button
                 className="px-3 py-2 rounded-md bg-blue-900 text-white"
                 type="submit"
