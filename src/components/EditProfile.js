@@ -245,7 +245,8 @@ const handleFirstNameChange = (event) => {
   </form>
   
 </div>
-    docId={docId}
+     
+    
     </Box>
   );
 }
