@@ -27,10 +27,13 @@ const MyTryoutDates = ({ open, handleClose }) => {
   const { register, handleSubmit, reset } = useForm();
   const [docId, setDocId] = useState("");
   const [data1, setData1] = useState([]);
+  const [games, setMyGames] = useState([])
   const user = useSelector(selectUser);
   const [sportNames, setSportNames]= useState([]);
-  
-
+  const [matchedDates, setMatchedDates] = useState([])
+  var [tryout, setTryout] = useState("")
+  let tryoutDates = []
+ 
   const getSportdata= async() => {
     const CollectionR = collection(db, `sports`);
     const col = await getDocs(CollectionR);
@@ -47,50 +50,6 @@ const MyTryoutDates = ({ open, handleClose }) => {
     };
     
 
-  
-    const db1 = getFirestore(); // assume that you've already initialized Firestore
-
-    // const getSportData = async () => {
-    //   try {
-    //     const collections = await listCollections(db); // get a list of all collections in the database
-    //     const sportNames = [];
-    
-    //     for (const collectionRef of collections) {
-    //       const collectionName = collectionRef.id; // get the name of the collection
-    //       const collectionDocs = await getDocs(collectionRef); // get the documents in the collection
-    //       const data = collectionDocs.docs.map((doc) => doc.data()); // extract the data from each document
-    //       sportNames.push({
-    //         name: collectionName,
-    //         data: data,
-    //       }); // add the collection name and data to the sportNames array
-    //     }
-    
-    //     setSportNames(sportNames);
-    //   } catch (error) {
-    //     console.error(error);
-    //     // handle error
-    //   }
-    // };
-    
-    
-
-
-  const checkEmailInCollections = async (email, sportsNames) => {
-    try {
-      for (const { name, data } of sportsNames) {
-        const isEmailPresent = Object.values(data).some(value => typeof value === "string" && value.includes(email));
-        
-        if (!isEmailPresent) {
-          return false;
-        }
-      }
-      return true;
-    } catch (error) {
-      console.error(error);
-      // handle error
-    }
-  };
-
   let dates = [];
   const [data, setData] = useState([]);
 const getDates= async() => {
@@ -101,10 +60,7 @@ const getDates= async() => {
   
   setData(dates);
 };
-  console.log(data);
-
-
-    const calling = (d, id) => {
+ const calling = (d, id) => {
       setData1(d);
       setDocId(id);
       
@@ -115,8 +71,37 @@ const getDates= async() => {
     getSportdata();
     getUserDataagain();
     //getApplicants();
+    getSports();
+    setMatchedDates(getMatch(data, games))
   }, [])
-  
+
+  const getSports = () => {sportNames.forEach(async (e)=> {
+    const newColl = collection(db, e)
+    const col = await getDocs(
+      query(newColl, where('Email',"==", user.email))
+    )
+    col.forEach((doc) => { 
+      const tryData = doc.data().dataForm.gameName
+      tryoutDates.push(tryData)      })
+    })
+    setMyGames(tryoutDates)
+
+  console.log(games.length)
+
+}
+  const getMatch = (a, b) => {
+    var matches = [];
+    for ( var i = 0; i < a.length; i++ ) {
+      for ( var e = 0; e < b.length; e++ ) {
+        console.log(a[i].gameName, b[e])
+            if ( a[i].gameName === b[e] ) matches.push( a[i] );
+        }
+    }
+    return matches;
+}
+
+
+ 
   return (
     <>
        <Toaster />
@@ -141,7 +126,7 @@ const getDates= async() => {
               
             </tr>
           </thead>
-          {data.map((item) => (
+          {matchedDates.map((item) => (
             <tr id={item.Name}>
               <td className="grid-cols-6 text-center">{item.gameName}</td>
               <td className="px-3 py-2  whitespace-nowrap">{item.Date}</td>
