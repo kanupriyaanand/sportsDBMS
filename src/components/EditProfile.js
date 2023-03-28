@@ -69,7 +69,7 @@ const [docId, setDocId] = useState("");
         setUser(data);
         setDocId(id);
         data.isAdmin && setAdmin(true);
-        console.log(data)
+    
         setFirstName(user?.First_name)
         setLastName(user?.Last_name)
         setEmail(user?.Email)
@@ -92,11 +92,11 @@ const [docId, setDocId] = useState("");
 //     const q = query(usersCollection, where("First_name", "==", firstName));
 //     const querySnapshot = await getDocs(q);
 //     if (querySnapshot.empty) {
-//       console.log("n");
+//     
 //       return null;
 //     } else {
 //       const userDoc = querySnapshot.docs[0];
-//       console.log(userDoc.id);
+//       
 //       return userDoc.id;
 //     }
 //   }
@@ -105,19 +105,19 @@ const [docId, setDocId] = useState("");
     const userDocRef = doc(db, "studentUsers", docId);
     try {
       await updateDoc(userDocRef, { First_name: firstName, Last_name: lastName , Email: email, Mobile_number: mobilenumber, Username: username, USN: usn, date_of_birth: dateofbirth, semester: semester, Counselor_email: cemail});
-      console.log("name updated successfully");
+     
     } catch (error) {
       console.error("Error updating first name: ", error);
     }
   }*/
 
   async function handleUpdate() {
-    //console.log(dataForm);
+  
     const CollectionRef = doc(db, "studentUsers", docId);
     try {
       
     await updateDoc(CollectionRef, {First_name: firstName,Last_name: lastName,semester: semester,Mobile_number: mobilenumber, Username: username,USN: usn,date_of_birth: dateofbirth});
-    console.log("name updated"); 
+  
 
 
       /*const userData = collection(db, "studentUsers");
@@ -126,7 +126,7 @@ const [docId, setDocId] = useState("");
       const calling = (data) => {
         setUser(data);
         data.isAdmin && setAdmin(true);
-        console.log(data)
+
         
       };*/
       //reset();
@@ -150,7 +150,7 @@ const [docId, setDocId] = useState("");
       //checkForDuplicate();
       //handleClose();
     } catch (e) {
-      console.log(e);
+
     }
   };
 

@@ -12,7 +12,7 @@ const DataTable = ({ value }) => {
     querySnapshot.forEach((doc) => {
       users.push(doc.data());
     });
-    console.log(users);
+ 
     setData(users);
   };
 
@@ -23,7 +23,7 @@ const DataTable = ({ value }) => {
   const doc = new jsPDF();
 
   const handlePrint = () => {
-    console.log("this works");
+   
     const dataPlot = data.map((item) => {
       return [
         item.Name,

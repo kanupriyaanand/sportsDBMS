@@ -40,7 +40,7 @@ const Achievements = () => {
     
     setDocId(id);
     d.isAdmin && setAdmin(true);
-    console.log(d.isAdmin);
+ 
   };
 
   let users = [];
@@ -50,7 +50,7 @@ const Achievements = () => {
     querySnapshot.forEach((doc) => {
       users.push(doc.data());
     });
-    console.log(users);
+
     setData(users);
   };
 
@@ -70,17 +70,17 @@ const Achievements = () => {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        console.log("logged out");
+
       })
       .catch((error) => {
-        console.log(error);
+  
       });
   };
 
   const doc = new jsPDF();
 
   const handlePrint = () => {
-    console.log('this works')
+
 const   dataPlot = 
       data.map((item) => {
         return   [item.Name,

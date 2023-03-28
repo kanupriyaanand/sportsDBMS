@@ -30,10 +30,10 @@ const AddSport = ({ open, handleClose, data, docId }) => {
     const { register, handleSubmit, reset } = useForm();
 
     const onSubmit = async (dataForm) => {
-      console.log(dataForm);
+     
       try {
         const CollectionRef = doc(db, "sports", "NdzFxfaLpUAjWpuxbRnq");
-        console.log(CollectionRef)
+       
         await updateDoc(CollectionRef, {
             Game: arrayUnion(dataForm.Name)
         });
@@ -48,7 +48,7 @@ const AddSport = ({ open, handleClose, data, docId }) => {
        
         handleClose();
       } catch (e) {
-        console.log(e);
+       
       }
     };
   return (

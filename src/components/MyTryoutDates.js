@@ -82,19 +82,14 @@ const MyTryoutDates = ({ open, handleClose }) => {
       query(newColl, where('Email',"==", user.email))
     )
     col.forEach(async (doc) => { 
-      console.log(doc.data())
       tryoutDates.push(doc.data().dataForm.gameName)      
     })
     })
-    console.log(tryoutDates)
-    console.log(games.length)
 }
   const getMatch = (a, b) => {
     var matches = [];
-    console.log(a,b)
     for ( var i = 0; i < a.length; i++ ) {
       for ( var e = 0; e < b.length; e++ ) {
-        console.log(a[i].gameName, b[e])
             if ( a[i].gameName === b[e] ) matches.push( a[i] );
         }
     }

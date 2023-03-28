@@ -37,7 +37,7 @@ const AddDates = ({ open, handleClose, data, docId }) => {
   }, [])
   
   const onSubmit = async (dataForm) => {
-    console.log(dataForm);
+
     try {
       const CollectionRef = doc(db, `TryoutDates/${dataForm.gameName}`);
       await setDoc(CollectionRef, dataForm);
@@ -53,7 +53,7 @@ const AddDates = ({ open, handleClose, data, docId }) => {
       
       handleClose();
     } catch (e) {
-      console.log(e);
+
     }
   };
 

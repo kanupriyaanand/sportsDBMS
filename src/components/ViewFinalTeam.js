@@ -27,17 +27,18 @@ const style = {
 };
 
 const ViewFinalTeam = ({ open, handleClose }) => {
-  const [value, setValue] = useState(1);
+  const [value, setValue] = useState("");
   const [isAdmin, setAdmin] = useState(false);
   const [open2, setOpen] = useState(false);
   const [docId, setDocId] = useState("");
   const [data1, setData1] = useState([]);
-
+  const [sportsData, setSportNames]=useState([]);
   const handleOpen2 = () => setOpen(true);
   const handleClose2 = () => setOpen(false);
   const user = useSelector(selectUser);
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    console.log(newValue)
   };
 
   const getUserDataagain = async () => {
@@ -48,8 +49,15 @@ const ViewFinalTeam = ({ open, handleClose }) => {
     docSnap.forEach((doc) => calling(doc.data(), doc.id));
   };
 
+  const sportsNames= async() => {
+    const CollectionR = collection(db, `sports`);
+    const col = await getDocs(CollectionR);
+    col.forEach((col) => {
+     setSportNames(col.data().Game)
+    })
+  };
   useEffect(() => {
-    
+    sportsNames();
     getUserDataagain();
   }, []);
 
@@ -90,19 +98,14 @@ const ViewFinalTeam = ({ open, handleClose }) => {
               scrollButtons="auto"
               aria-label="scrollable auto tabs example"
             >
-              <Tab label="Basketball" value={3} />
-              <Tab label="Gymnastics" value={2} /> 
-              <Tab label="Football" value={1} />
-              <Tab label="Badminton" value={4} />
-              <Tab label="Cricket" value={5} />
-              <Tab label="Hockey" value={6} />
+               {
+                sportsData?.map((e)=><Tab label={e} value={e}/>)
+              }
+            {/* tabs.map((e)=><Tab label={e.value} value={e.value}/>) */}
             </Tabs>
-            {value === 1 && <ApplicantsTable value={"football"} />}
-            {value === 2 && <ApplicantsTable value={"gymnastics"} />}
-            {value === 4 && <ApplicantsTable value={"badminton"} />}
-            {value === 3 && <ApplicantsTable value={"basketball"} />}
-            {value === 6 && <ApplicantsTable value={"hockey"} />}
-            {value === 5 && <ApplicantsTable value={"cricket"} />}
+           
+            {value && <ApplicantsTable value={value}/>}
+                      
           </div>
           <AddSport
         open={open2}

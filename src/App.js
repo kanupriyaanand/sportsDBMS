@@ -28,7 +28,7 @@ function App() {
             isAdmin: false,
           })
         );
-        console.log(userAuth);
+    
       } else {
         //Logged Out
         dispatch(logout());

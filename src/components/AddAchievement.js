@@ -30,7 +30,7 @@ const AddAchievement = ({ open, handleClose, data, docId }) => {
     const user = useSelector(selectUser);
   
     const onSubmit = async (dataForm) => {
-      console.log(dataForm);
+    
       try {
         const CollectionRef = doc(db, `Achievements/${dataForm.Name}`);
         await setDoc(CollectionRef, dataForm);
@@ -46,7 +46,7 @@ const AddAchievement = ({ open, handleClose, data, docId }) => {
         
         handleClose();
       } catch (e) {
-        console.log(e);
+   
       }
     };
   

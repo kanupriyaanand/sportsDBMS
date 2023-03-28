@@ -28,7 +28,7 @@ const AddEvent = ({ open, handleClose, data, docId }) => {
   const user = useSelector(selectUser);
 
   const onSubmit = async (dataForm) => {
-    console.log(dataForm);
+   
     try {
       const CollectionRef = doc(db, `Upcoming_Tournaments/${dataForm.Date}`);
       await setDoc(CollectionRef, dataForm);
@@ -44,7 +44,7 @@ const AddEvent = ({ open, handleClose, data, docId }) => {
       
       handleClose();
     } catch (e) {
-      console.log(e);
+ 
     }
   };
 

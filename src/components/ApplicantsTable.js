@@ -10,13 +10,12 @@ const ApplicantsTable = ({value}) => {
     querySnapshot.forEach((doc) => {
       users.push(doc.data());
     });
-    console.log(users);
     setData(users);
   };
 
   useEffect(() => {
     getUserData();
-  }, []);
+  }, [value]);
   return (
     <div className="mb-32 bg-white">
     <table className="table-auto overflow-x-scroll w-full block ">
@@ -40,7 +39,7 @@ const ApplicantsTable = ({value}) => {
           <td className="px-4 py-2 whitespace-nowrap">{item.USN}</td>
           <td className="px-4 py-2 whitespace-nowrap">{item.Mobile_number}</td>
           <td className="px-4 py-2 whitespace-nowrap">{item.department}</td>
-          <td className="px-4 py-2 whitespace-nowrap">{item.dataForm.gameName}</td>
+          <td className="px-4 py-2 whitespace-nowrap">{value}</td>
           <td className="px-4 py-2 whitespace-nowrap">{item.gender}</td>
           
         </tr>
