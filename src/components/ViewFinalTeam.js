@@ -18,11 +18,11 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "60vw",
+  width: "1000vw",
   bgcolor: "background.paper",
   borderRadius: "10px",
   boxShadow: 24,
-  maxWidth: 700,
+  maxWidth: 1200,
   p: 4,
 };
 

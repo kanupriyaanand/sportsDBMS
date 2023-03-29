@@ -38,8 +38,9 @@ const DataTable = ({ value }) => {
     });
 
     autoTable(doc, {
+      
       head: [
-        [
+        [  
           "Name",
           "Tournament",
           "USN",
