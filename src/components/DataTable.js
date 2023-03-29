@@ -34,12 +34,14 @@ const DataTable = ({ value }) => {
         item.Game,
         item.place,
         item.Result,
+        console.log(data)
       ];
     });
 
     autoTable(doc, {
       
       head: [
+        ["RVCE", "CONSOLIDATED", "ATTENDANCE", "FOR","" ,"","",data[0].Branch],
         [  
           "Name",
           "Tournament",
