@@ -32,6 +32,8 @@ const HomeScreen = () => {
   const [docId, setDocId] = useState("");
   const [isAdmin, setAdmin] = useState(false);
   const [userVal, setUser] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
+
 
   const handleLogout = () => {
     signOut(auth)
@@ -83,6 +85,11 @@ const HomeScreen = () => {
     console.log(data.isAdmin);
   };
 
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  }
+
+  
   let series = [];
 
   const getUsersData = async () => {
@@ -235,6 +242,8 @@ const HomeScreen = () => {
         docId={docId}
         admin={isAdmin}
       />
+      {/* <Chart data={chartData} selectedDate={selectedDate} onDateChange={handleDateChange} /> */}
+
       {(alldata.length===0)?<></>:<Graph data={alldata} />}
     </Box>
   );
