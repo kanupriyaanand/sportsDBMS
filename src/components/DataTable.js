@@ -12,7 +12,7 @@ const DataTable = ({ value }) => {
     querySnapshot.forEach((doc) => {
       users.push(doc.data());
     });
- 
+
     setData(users);
   };
 
@@ -23,7 +23,6 @@ const DataTable = ({ value }) => {
   const doc = new jsPDF();
 
   const handlePrint = () => {
-   
     const dataPlot = data.map((item) => {
       return [
         item.Name,
@@ -34,15 +33,25 @@ const DataTable = ({ value }) => {
         item.Game,
         item.place,
         item.Result,
-        console.log(data)
       ];
     });
-
+   
     autoTable(doc, {
-      
+      margin: { horizontal: 10 },
+      styles: { overflow: "linebreak" },
+      bodyStyles: { valign: "top" },
+      didDrawPage: function (data) {
+        // Header
+        doc.setFontSize(20);
+        doc.setTextColor(40);
+        doc.text(
+          `RVCE CONSOLIDATED ATTENDANCE FOR ${data[0].branch}`,
+          data.settings.margin.left,
+          22
+        );
+      },
       head: [
-        ["RVCE", "CONSOLIDATED", "ATTENDANCE", "FOR","" ,"","",data[0].Branch],
-        [  
+        [
           "Name",
           "Tournament",
           "USN",
