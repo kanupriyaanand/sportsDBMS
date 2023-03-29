@@ -1,7 +1,8 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import Chart from "react-apexcharts";
 
-const Graph = ({ data }) => {
+const Graph = ({ data, setFiler }) => {
+  console.log(data);
   const game = [
     "football",
     "cricket",
@@ -16,23 +17,25 @@ const Graph = ({ data }) => {
     "weight lifting",
     "tennis",
     "weight lifting",
-      "table tennis",
-      "high jump",
-      "long jump",
-    "swimming"
+    "table tennis",
+    "high jump",
+    "long jump",
+    "swimming",
   ];
 
   const options = {
-    labels: game
+    labels: game,
   };
+
+
 
   return (
     <div className="bg-white w-fit mt-5 mx-auto rounded-2xl p-5">
       <span>Statistics of applicants for try-outs</span>
+      
       <Chart options={options} type="pie" series={data} width="380" />
     </div>
   );
-
 
   // const data1= data.map((e,i)=>{ return {x:game[i], y:e}});
   // console.log(data1)
@@ -63,7 +66,7 @@ const Graph = ({ data }) => {
   // return (
   //   <div className="bg-white w-fit mt-5 mx-auto rounded-2xl p-5">
   //     <span>Statistics of applicants for try-outs</span>
-      
+
   //     <Chart
   //             options={state.options}
   //             series={state.series}

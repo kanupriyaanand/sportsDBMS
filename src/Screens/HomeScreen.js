@@ -14,13 +14,13 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import Graph from "../components/Graph";
 //import firebase from "firebase/app";
-import firebase from 'firebase/compat/app';
+import firebase from "firebase/compat/app";
 import "firebase/auth";
 import "firebase/firestore";
 import AddDates from "../components/AddDates";
 import TryoutDates from "../components/TryoutDates";
 import MyTryoutDates from "../components/MyTryoutDates";
-
+import { current } from "@reduxjs/toolkit";
 
 const HomeScreen = () => {
   const [data, setData] = useState(null);
@@ -60,19 +60,22 @@ const HomeScreen = () => {
 
     docSnap.forEach((doc) => calling(doc.data(), doc.id));
   };
+  const [filter, setFiler] = useState("present");
 
   useEffect(() => {
     getUserData();
     getUsersData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     //firebase.auth().onAuthStateChanged((currentUser) => {
-    {/*db.onAuthStateChanged((currentUser) => {
+    {
+      /*db.onAuthStateChanged((currentUser) => {
       if (currentUser) {
         setUser(currentUser);
       } else {
         setUser(null);
       }
-    });*/}
+    });*/
+    }
   }, []);
 
   const calling = (data, id) => {
@@ -84,6 +87,11 @@ const HomeScreen = () => {
   };
 
   let series = [];
+  let series1 = [];
+
+  useEffect(() => {
+    getUserData();
+  }, [filter]);
 
   const getUsersData = async () => {
     const game = [
@@ -100,14 +108,26 @@ const HomeScreen = () => {
       "table tennis",
       "high jump",
       "long jump",
-      "tennis"
+      "tennis",
     ];
     game.forEach(async (i) => {
       const querySnapshot = await getDocs(collection(db, i));
-      series.push(querySnapshot.size);
+      querySnapshot.forEach((doc) => {
+        const date = doc.data().date;
+        const dateCov = new Date(date);
+        if (dateCov > cuurentDate) series.push(querySnapshot.size);
+        else series1.push(querySnapshot.size);
+      });
+      filter === "present" ? setAllData(series) : setAllData(series1);
     });
-    setAllData(series);
-    console.log("running");
+  };
+
+  const cuurentDate = new Date("2022-03-29");
+  console.log(cuurentDate);
+
+  const handlechange = (e) => {
+    console.log(e.target.value);
+    setFiler(e.target.value);
   };
 
   return (
@@ -147,14 +167,8 @@ const HomeScreen = () => {
             component="div"
             sx={{ flexGrow: 1, marginLeft: "45px" }}
           >
-          {userVal && (
-          <p>
-          Welcome, {userVal?.First_name}! 
-          </p>
-          )}
+            {userVal && <p>Welcome, {userVal?.First_name}!</p>}
           </Typography>
-
-          
 
           <Link className="underline mr-8" to="/upcomingEvents">
             Events
@@ -186,26 +200,29 @@ const HomeScreen = () => {
           </button>
         )}
         {isAdmin && (
-        <button
-          className="bg-white text-black w-full p-3 rounded-xl text-lg font-semibold hover:bg-gray-300"
-          onClick={handleOpen1}
-        >
-          View Applicants
-        </button>)}
+          <button
+            className="bg-white text-black w-full p-3 rounded-xl text-lg font-semibold hover:bg-gray-300"
+            onClick={handleOpen1}
+          >
+            View Applicants
+          </button>
+        )}
         {isAdmin && (
-        <button
-          className="bg-white text-black w-full p-3 rounded-xl text-lg font-semibold hover:bg-gray-300"
-          onClick={handleOpen2}
-        >
-          Dates for Try-outs
-        </button>)}
+          <button
+            className="bg-white text-black w-full p-3 rounded-xl text-lg font-semibold hover:bg-gray-300"
+            onClick={handleOpen2}
+          >
+            Dates for Try-outs
+          </button>
+        )}
         {!isAdmin && (
-        <button
-          className="bg-white text-black w-full p-3 rounded-xl text-lg font-semibold hover:bg-gray-300"
-          onClick={handleOpen3}
-        >
-          My Try-outs Dates
-        </button>)}
+          <button
+            className="bg-white text-black w-full p-3 rounded-xl text-lg font-semibold hover:bg-gray-300"
+            onClick={handleOpen3}
+          >
+            My Try-outs Dates
+          </button>
+        )}
       </div>
       <RegisterForTryouts
         data={data}
@@ -235,7 +252,15 @@ const HomeScreen = () => {
         docId={docId}
         admin={isAdmin}
       />
-      {(alldata.length===0)?<></>:<Graph data={alldata} />}
+      <select className="" onChange={handlechange}>
+        <option value="present">This Year</option>
+        <option value="last">Last Year</option>
+      </select>
+      {alldata.length === 0 ? (
+        <></>
+      ) : (
+        <Graph data={alldata} filter={filter} setFiler={setFiler} />
+      )}
     </Box>
   );
 };

@@ -34,16 +34,16 @@ const style = {
 const RegisterForTryouts = ({ open, handleClose, data, docId }) => {
   const { register, handleSubmit, reset } = useForm();
   const user = useSelector(selectUser);
-  const [sportNames, setSportNames]= useState([]);
-  
-  useEffect(async() => {
+  const [sportNames, setSportNames] = useState([]);
+
+  useEffect(async () => {
     const CollectionR = collection(db, `sports`);
     const col = await getDocs(CollectionR);
     col.forEach((col) => {
-     setSportNames(col.data().Game)
-    })
-  }, [])
-  
+      setSportNames(col.data().Game);
+    });
+  }, []);
+
   const onSubmit = async (dataForm) => {
     console.log(dataForm);
     try {
@@ -64,9 +64,7 @@ const RegisterForTryouts = ({ open, handleClose, data, docId }) => {
           toast.error("User already registered");
         }
       };
-      
 
-      
       checkForDuplicate();
       handleClose();
     } catch (e) {
@@ -141,9 +139,9 @@ const RegisterForTryouts = ({ open, handleClose, data, docId }) => {
                   Select Sport
                 </option>
 
-              {
-                sportNames?.map((e)=><option value={e.toLowerCase()||""}>{e}</option>)
-              }
+                {sportNames?.map((e) => (
+                  <option value={e.toLowerCase() || ""}>{e}</option>
+                ))}
               </select>
               <select
                 className="px-3 py-2 rounded-md"
