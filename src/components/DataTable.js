@@ -12,7 +12,7 @@ const DataTable = ({ value }) => {
     querySnapshot.forEach((doc) => {
       users.push(doc.data());
     });
-
+ 
     setData(users);
   };
 
@@ -23,6 +23,7 @@ const DataTable = ({ value }) => {
   const doc = new jsPDF();
 
   const handlePrint = () => {
+   
     const dataPlot = data.map((item) => {
       return [
         item.Name,
@@ -35,21 +36,32 @@ const DataTable = ({ value }) => {
         item.Result,
       ];
     });
-   
+    /*var imgData = 'data:image/jpeg;base64,'+ Base64.encode ('your-image.jpeg');
+    doc.addImage (imgData, 'JPEG', 15, 40, 180, 160);*/
+
+    const stripWidth = doc.internal.pageSize.getWidth();
+    const stripHeight = 30;
+
+    //Set the fill color to blue
+    doc.setFillColor('#0074D9');
+
+// Draw a rectangle to create the blue strip
+    doc.rect(0, 0, stripWidth, stripHeight, 'F');
+
+// Load the image you want to add to the PDF document
+   //const imgData = 'C:\Users\ANUSHKA JINDAL\Desktop\RVCE\EL\DBD EL\sportsDBMS\src\assets\R.V._College_of_Engineering_logo.png';
+
+// Add the image to the PDF document at the top of the blue strip
+   //doc.addImage(imgData,'PNG', 10, 10, 20, 20,null,20,0);
+  
+
+   doc.setFontSize(16);
+   doc.setTextColor('#FFFFFF');
+   doc.text(stripWidth / 2, stripHeight / 2, "RV College of Engineering", 'center', 'middle');
+
+   // doc.text("Participation for ",10,10,{fontsize: 14,fontType: 'bold'}, 'center', 'middle');
+    doc.text(data[0].Branch,10,10,{fontsize: 14,fontType: 'bold',align: "center"},);
     autoTable(doc, {
-      margin: { horizontal: 10 },
-      styles: { overflow: "linebreak" },
-      bodyStyles: { valign: "top" },
-      didDrawPage: function (data) {
-        // Header
-        doc.setFontSize(20);
-        doc.setTextColor(40);
-        doc.text(
-          `RVCE CONSOLIDATED ATTENDANCE FOR ${data[0].branch}`,
-          data.settings.margin.left,
-          22
-        );
-      },
       head: [
         [
           "Name",
@@ -63,6 +75,7 @@ const DataTable = ({ value }) => {
         ],
       ],
       body: dataPlot,
+      margin: {top: 40},
     });
     doc.save("table.pdf");
   };
